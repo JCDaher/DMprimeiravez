@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeira Consulta - Diabetes | Dr. Jorge Cecílio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: "📋";
+            font-size: 1.2em;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="tel"],
+        input[type="email"],
+        select,
+        textarea {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-export {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-export:hover {
+            background: #218838;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .conditional-section {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+        }
+
+        .patients-list {
+            margin-top: 30px;
+        }
+
+        .patient-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .patient-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .patient-card.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .patient-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .patient-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .export-preview {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .export-preview pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🩺 Sistema de Primeira Consulta</h1>
+            <p>Dr. Jorge Cecílio - Atendimento de Diabetes Tipo 1 e Tipo 2</p>
+        </div>
+
+        <div class="form-container">
+            <div id="message" class="message"></div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('nova-consulta')">Nova Consulta</button>
+                <button class="tab" onclick="switchTab('consultas-salvas')">Consultas Salvas</button>
+            </div>
+
+            <div id="nova-consulta" class="tab-content active">
+                <form id="consultaForm">
+                    <!-- DADOS DEMOGRÁFICOS -->
+                    <div class="section">
+                        <h2 class="section-title">Dados Demográficos</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nomeCompleto">Nome Completo *</label>
+                                <input type="text" id="nomeCompleto" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dataNascimento">Data de Nascimento *</label>
+                                <input type="date" id="dataNascimento" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="idade">Idade</label>
+                                <input type="number" id="idade" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="sexo">Sexo *</label>
+                                <select id="sexo" required>
+                                    <option value="">Selecione</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Feminino">Feminino</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="telefone">Telefone</label>
+                                <input type="tel" id="telefone">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profissao">Profissão</label>
+                                <input type="text" id="profissao">
+                            </div>
+                            <div class="form-group">
+                                <label for="escolaridade">Escolaridade</label>
+                                <select id="escolaridade">
+                                    <option value="">Selecione</option>
+                                    <option value="Fundamental Incompleto">Fundamental Incompleto</option>
+                                    <option value="Fundamental Completo">Fundamental Completo</option>
+                                    <option value="Médio Incompleto">Médio Incompleto</option>
+                                    <option value="Médio Completo">Médio Completo</option>
+                                    <option value="Superior Incompleto">Superior Incompleto</option>
+                                    <option value="Superior Completo">Superior Completo</option>
+                                    <option value="Pós-graduação">Pós-graduação</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TIPO DE DIABETES E DIAGNÓSTICO -->
+                    <div class="section">
+                        <h2 class="section-title">Tipo de Diabetes e Diagnóstico</h2>
+                        <div class="form-group">
+                            <label>Tipo de Diabetes *</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="tipo1" name="tipoDiabetes" value="Tipo 1" required>
+                                    <label for="tipo1">Tipo 1</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="tipo2" name="tipoDiabetes" value="Tipo 2">
+                                    <label for="tipo2">Tipo 2</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="preDiabetes" name="tipoDiabetes" value="Pré-diabetes">
+                                    <label for="preDiabetes">Pré-diabetes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="gestacional" name="tipoDiabetes" value="Gestacional">
+                                    <label for="gestacional">Gestacional</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dataDiagnostico">Data do Diagnóstico</label>
+                                <input type="date" id="dataDiagnostico">
+                            </div>
+                            <div class="form-group">
+                                <label for="tempoDiagnostico">Tempo de Diagnóstico</label>
+                                <input type="text" id="tempoDiagnostico" placeholder="Ex: 5 anos">
+                            </div>
+                            <div class="form-group">
+                                <label for="comoDiagnosticado">Como foi diagnosticado?</label>
+                                <input type="text" id="comoDiagnosticado" placeholder="Ex: Exame de rotina, sintomas">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HISTÓRIA DA DOENÇA ATUAL -->
+                    <div class="section">
+                        <h2 class="section-title">História da Doença Atual</h2>
+                        <div class="form-group">
+                            <label for="queixaPrincipal">Queixa Principal</label>
+                            <textarea id="queixaPrincipal" placeholder="Motivo da consulta e principais queixas"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Sintomas Atuais</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sintPoliuria" value="Poliúria">
+                                    <label for="sintPoliuria">Poliúria (urinar muito)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sintPolidipsia" value="Polidipsia">
+                                    <label for="sintPolidipsia">Polidipsia (sede excessiva)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sintPolifagia" value="Polifagia">
+                                    <label for="sintPolifagia">Polifagia (fome excessiva)</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sintPerdaPeso" value="Perda de peso">
+                                    <label for="sintPerdaPeso">Perda de peso</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sintFadiga" value="Fadiga">
+                                    <label for="sintFadiga">Fadiga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sintVisaoTurva" value="Visão turva">
+                                    <label for="sintVisaoTurva">Visão turva</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sintFormigamento" value="Formigamento">
+                                    <label for="sintFormigamento">Formigamento em mãos/pés</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="sintInfeccoes" value="Infecções recorrentes">
+                                    <label for="sintInfeccoes">Infecções recorrentes</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="outrosSintomas">Outros Sintomas</label>
+                            <textarea id="outrosSintomas" placeholder="Descreva outros sintomas não listados"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- CONTROLE GLICÊMICO ATUAL -->
+                    <div class="section">
+                        <h2 class="section-title">Controle Glicêmico Atual</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="glicemiaJejum">Glicemia de Jejum (mg/dL)</label>
+                                <input type="number" id="glicemiaJejum" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="glicemiaPosP">Glicemia Pós-Prandial (mg/dL)</label>
+                                <input type="number" id="glicemiaPosP" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="hba1c">HbA1c (%)</label>
+                                <input type="number" id="hba1c" step="0.1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Monitora glicemia em casa?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="monitoraSim" name="monitoraGlicemia" value="Sim">
+                                    <label for="monitoraSim">Sim</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="monitoraNao" name="monitoraGlicemia" value="Não">
+                                    <label for="monitoraNao">Não</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="frequenciaMonitor">Frequência de Monitoramento</label>
+                                <input type="text" id="frequenciaMonitor" placeholder="Ex: 4x ao dia">
+                            </div>
+                            <div class="form-group">
+                                <label for="dispositivoMonitor">Dispositivo Usado</label>
+                                <input type="text" id="dispositivoMonitor" placeholder="Ex: Glicosímetro, CGM, Freestyle Libre">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Episódios de Hipoglicemia?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="hipoSim" name="hipoglicemia" value="Sim">
+                                    <label for="hipoSim">Sim</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="hipoNao" name="hipoglicemia" value="Não">
+                                    <label for="hipoNao">Não</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="frequenciaHipo">Frequência e Características das Hipoglicemias</label>
+                            <textarea id="frequenciaHipo" placeholder="Descreva frequência, valores, sintomas e como resolve"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- MEDICAÇÕES EM USO -->
+                    <div class="section">
+                        <h2 class="section-title">Medicações em Uso</h2>
+                        <div class="form-group">
+                            <label>Usa Insulina?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="insulinaSim" name="usaInsulina" value="Sim">
+                                    <label for="insulinaSim">Sim</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="insulinaNao" name="usaInsulina" value="Não">
+                                    <label for="insulinaNao">Não</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="insulinaBasal">Insulina Basal</label>
+                                <input type="text" id="insulinaBasal" placeholder="Ex: Lantus 20U às 22h">
+                            </div>
+                            <div class="form-group">
+                                <label for="insulinaBolus">Insulina Bolus (Rápida/Ultrarrápida)</label>
+                                <input type="text" id="insulinaBolus" placeholder="Ex: Humalog antes das refeições">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="esquemaInsulina">Esquema Completo de Insulina</label>
+                            <textarea id="esquemaInsulina" placeholder="Detalhe doses, horários e tipo de insulina"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="antidiabeticosOrais">Antidiabéticos Orais</label>
+                            <textarea id="antidiabeticosOrais" placeholder="Ex: Metformina 850mg - 2x ao dia"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="outrosMedicamentos">Outros Medicamentos em Uso</label>
+                            <textarea id="outrosMedicamentos" placeholder="Liste todos os outros medicamentos (não relacionados ao diabetes)"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="adesaoTratamento">Avaliação de Adesão ao Tratamento</label>
+                            <textarea id="adesaoTratamento" placeholder="O paciente segue corretamente as prescrições? Há dificuldades?"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- HISTÓRIA MÉDICA PREGRESSA -->
+                    <div class="section">
+                        <h2 class="section-title">História Médica Pregressa</h2>
+                        <div class="form-group">
+                            <label>Comorbidades</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="comHipertensao" value="Hipertensão">
+                                    <label for="comHipertensao">Hipertensão</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="comDislipidemia" value="Dislipidemia">
+                                    <label for="comDislipidemia">Dislipidemia</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="comObesidade" value="Obesidade">
+                                    <label for="comObesidade">Obesidade</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="comDoencaCard" value="Doença Cardiovascular">
+                                    <label for="comDoencaCard">Doença Cardiovascular</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="comDoencaRenal" value="Doença Renal">
+                                    <label for="comDoencaRenal">Doença Renal</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="comNeuropatia" value="Neuropatia">
+                                    <label for="comNeuropatia">Neuropatia</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="comRetinopatia" value="Retinopatia">
+                                    <label for="comRetinopatia">Retinopatia</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="comDepressao" value="Depressão">
+                                    <label for="comDepressao">Depressão/Ansiedade</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="outrasComorbidades">Outras Comorbidades</label>
+                            <textarea id="outrasComorbidades" placeholder="Liste outras doenças ou condições médicas"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="cirurgiasPrevia">Cirurgias Prévias</label>
+                            <textarea id="cirurgiasPrevia" placeholder="Liste cirurgias realizadas e quando"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="alergias">Alergias</label>
+                            <textarea id="alergias" placeholder="Alergias a medicamentos, alimentos ou outras substâncias"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="hospitalizacoes">Hospitalizações Prévias</label>
+                            <textarea id="hospitalizacoes" placeholder="Motivos e quando ocorreram"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- HISTÓRICO FAMILIAR -->
+                    <div class="section">
+                        <h2 class="section-title">Histórico Familiar</h2>
+                        <div class="form-group">
+                            <label>Familiares com Diabetes</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="famPais" value="Pais">
+                                    <label for="famPais">Pais</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="famIrmaos" value="Irmãos">
+                                    <label for="famIrmaos">Irmãos</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="famAvos" value="Avós">
+                                    <label for="famAvos">Avós</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="famTios" value="Tios">
+                                    <label for="famTios">Tios</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="detalhesFamiliares">Detalhes do Histórico Familiar</label>
+                            <textarea id="detalhesFamiliares" placeholder="Especifique quem tem diabetes (tipo 1 ou 2) e outras doenças familiares relevantes"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- HÁBITOS DE VIDA -->
+                    <div class="section">
+                        <h2 class="section-title">Hábitos de Vida</h2>
+                        <div class="form-group">
+                            <label for="alimentacao">Alimentação Habitual</label>
+                            <textarea id="alimentacao" placeholder="Descreva padrão alimentar, número de refeições, tipos de alimentos"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Segue alguma dieta específica?</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="dietaSim" name="segueDieta" value="Sim">
+                                    <label for="dietaSim">Sim</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="dietaNao" name="segueDieta" value="Não">
+                                    <label for="dietaNao">Não</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoDieta">Tipo de Dieta</label>
+                            <input type="text" id="tipoDieta" placeholder="Ex: Baixo carboidrato, contagem de carboidratos">
+                        </div>
+                        <div class="form-group">
+                            <label>Atividade Física</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="exercSim" name="praticaExerc" value="Sim">
+                                    <label for="exercSim">Sim</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="exercNao" name="praticaExerc" value="Não">
+                                    <label for="exercNao">Não</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoExercicio">Tipo e Frequência de Exercício</label>
+                            <textarea id="tipoExercicio" placeholder="Descreva tipo de exercício, frequência semanal e duração"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Tabagismo</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="fumaNao" name="tabagismo" value="Não">
+                                    <label for="fumaNao">Não</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="fumaAtual" name="tabagismo" value="Fumante atual">
+                                    <label for="fumaAtual">Fumante atual</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="exFuma" name="tabagismo" value="Ex-fumante">
+                                    <label for="exFuma">Ex-fumante</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="detalhesTabaco">Detalhes sobre Tabagismo</label>
+                            <input type="text" id="detalhesTabaco" placeholder="Quantidade, tempo de uso, quando parou">
+                        </div>
+                        <div class="form-group">
+                            <label>Consumo de Álcool</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="alcoolNao" name="alcool" value="Não">
+                                    <label for="alcoolNao">Não</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="alcoolSocial" name="alcool" value="Social">
+                                    <label for="alcoolSocial">Social</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="alcoolFreq" name="alcool" value="Frequente">
+                                    <label for="alcoolFreq">Frequente</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="detalhesAlcool">Detalhes sobre Consumo de Álcool</label>
+                            <input type="text" id="detalhesAlcool" placeholder="Frequência e quantidade">
+                        </div>
+                        <div class="form-group">
+                            <label for="sono">Padrão de Sono</label>
+                            <textarea id="sono" placeholder="Horas de sono, qualidade, problemas"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="estresse">Nível de Estresse e Saúde Mental</label>
+                            <textarea id="estresse" placeholder="Avaliação do nível de estresse, ansiedade, suporte emocional"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- EXAME FÍSICO -->
+                    <div class="section">
+                        <h2 class="section-title">Exame Físico</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="peso">Peso (kg)</label>
+                                <input type="number" id="peso" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="altura">Altura (m)</label>
+                                <input type="number" id="altura" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="imc">IMC</label>
+                                <input type="number" id="imc" step="0.1" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="circunfAbdominal">Circunferência Abdominal (cm)</label>
+                                <input type="number" id="circunfAbdominal" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="pa">Pressão Arterial (mmHg)</label>
+                                <input type="text" id="pa" placeholder="Ex: 120/80">
+                            </div>
+                            <div class="form-group">
+                                <label for="fc">Frequência Cardíaca (bpm)</label>
+                                <input type="number" id="fc">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="examePes">Exame dos Pés</label>
+                            <textarea id="examePes" placeholder="Sensibilidade, pulsos, lesões, deformidades"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="outrosAchados">Outros Achados do Exame Físico</label>
+                            <textarea id="outrosAchados" placeholder="Outros achados relevantes"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- EXAMES LABORATORIAIS -->
+                    <div class="section">
+                        <h2 class="section-title">Exames Laboratoriais Recentes</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dataExames">Data dos Exames</label>
+                                <input type="date" id="dataExames">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="glicemiaJejumLab">Glicemia de Jejum (mg/dL)</label>
+                                <input type="number" id="glicemiaJejumLab" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="hba1cLab">HbA1c (%)</label>
+                                <input type="number" id="hba1cLab" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="frutosaminaLab">Frutosamina (se disponível)</label>
+                                <input type="number" id="frutosaminaLab" step="0.1">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="colesterolTotal">Colesterol Total (mg/dL)</label>
+                                <input type="number" id="colesterolTotal" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="hdl">HDL (mg/dL)</label>
+                                <input type="number" id="hdl" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="ldl">LDL (mg/dL)</label>
+                                <input type="number" id="ldl" step="0.1">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="triglicerides">Triglicérides (mg/dL)</label>
+                                <input type="number" id="triglicerides" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="creatinina">Creatinina (mg/dL)</label>
+                                <input type="number" id="creatinina" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="tgf">TFG (mL/min/1.73m²)</label>
+                                <input type="number" id="tgf" step="0.1">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="albuminuria">Albuminúria/Relação Albumina-Creatinina</label>
+                                <input type="text" id="albuminuria">
+                            </div>
+                            <div class="form-group">
+                                <label for="tsh">TSH (hormônio tireoideano)</label>
+                                <input type="number" id="tsh" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="vitaminaD">Vitamina D</label>
+                                <input type="number" id="vitaminaD" step="0.1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="outrosExames">Outros Exames</label>
+                            <textarea id="outrosExames" placeholder="Liste outros exames relevantes e seus resultados"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- AVALIAÇÃO DE COMPLICAÇÕES -->
+                    <div class="section">
+                        <h2 class="section-title">Avaliação de Complicações do Diabetes</h2>
+                        <div class="form-group">
+                            <label>Retinopatia Diabética</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="retinoSim" name="retinopatia" value="Sim">
+                                    <label for="retinoSim">Sim</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="retinoNao" name="retinopatia" value="Não">
+                                    <label for="retinoNao">Não</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="retinoNaoAvaliado" name="retinopatia" value="Não avaliado">
+                                    <label for="retinoNaoAvaliado">Não avaliado</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="detalheRetino">Detalhes da Avaliação Oftalmológica</label>
+                            <textarea id="detalheRetino" placeholder="Data da última avaliação, achados, tratamentos"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Neuropatia Diabética</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="neuroSim" name="neuropatia" value="Sim">
+                                    <label for="neuroSim">Sim</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="neuroNao" name="neuropatia" value="Não">
+                                    <label for="neuroNao">Não</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="neuroNaoAvaliado" name="neuropatia" value="Não avaliado">
+                                    <label for="neuroNaoAvaliado">Não avaliado</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="detalheNeuro">Sintomas de Neuropatia</label>
+                            <textarea id="detalheNeuro" placeholder="Formigamento, dor, perda de sensibilidade, localização"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Nefropatia Diabética</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="nefroSim" name="nefropatia" value="Sim">
+                                    <label for="nefroSim">Sim</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="nefroNao" name="nefropatia" value="Não">
+                                    <label for="nefroNao">Não</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="nefroNaoAvaliado" name="nefropatia" value="Não avaliado">
+                                    <label for="nefroNaoAvaliado">Não avaliado</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="detalheNefro">Achados Renais</label>
+                            <textarea id="detalheNefro" placeholder="Função renal, albuminúria, estágio da DRC"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Doença Cardiovascular</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="cardioSim" name="doencaCard" value="Sim">
+                                    <label for="cardioSim">Sim</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="cardioNao" name="doencaCard" value="Não">
+                                    <label for="cardioNao">Não</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="detalheCardio">Detalhes Cardiovasculares</label>
+                            <textarea id="detalheCardio" placeholder="IAM prévio, angina, AVC, doença arterial periférica"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Pé Diabético</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="peDiabSim" name="peDiabetico" value="Sim">
+                                    <label for="peDiabSim">Sim</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="peDiabNao" name="peDiabetico" value="Não">
+                                    <label for="peDiabNao">Não</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="detalhePe">Achados no Pé</label>
+                            <textarea id="detalhePe" placeholder="Úlceras, deformidades, infecções prévias, amputações"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- OBJETIVOS E METAS -->
+                    <div class="section">
+                        <h2 class="section-title">Objetivos e Metas do Tratamento</h2>
+                        <div class="form-group">
+                            <label for="metaHba1c">Meta de HbA1c</label>
+                            <input type="text" id="metaHba1c" placeholder="Ex: < 7%">
+                        </div>
+                        <div class="form-group">
+                            <label for="metaGlicemia">Meta de Glicemia</label>
+                            <input type="text" id="metaGlicemia" placeholder="Ex: Jejum 80-130 mg/dL, Pós-prandial < 180 mg/dL">
+                        </div>
+                        <div class="form-group">
+                            <label for="metaPeso">Meta de Peso</label>
+                            <input type="text" id="metaPeso" placeholder="Ex: Perder 5kg em 6 meses">
+                        </div>
+                        <div class="form-group">
+                            <label for="outrasMetasObj">Outras Metas e Objetivos</label>
+                            <textarea id="outrasMetasObj" placeholder="Metas de PA, lipídios, atividade física, etc."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- PLANO TERAPÊUTICO -->
+                    <div class="section">
+                        <h2 class="section-title">Plano Terapêutico Proposto</h2>
+                        <div class="form-group">
+                            <label for="prescricaoMedicamentos">Prescrição de Medicamentos</label>
+                            <textarea id="prescricaoMedicamentos" placeholder="Medicamentos prescritos, doses, horários"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="orientacaoDieta">Orientação Nutricional</label>
+                            <textarea id="orientacaoDieta" placeholder="Recomendações dietéticas, encaminhamento para nutricionista"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="orientacaoExerc">Orientação de Atividade Física</label>
+                            <textarea id="orientacaoExerc" placeholder="Tipo de exercício recomendado, frequência"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="educacaoDiabetes">Educação em Diabetes</label>
+                            <textarea id="educacaoDiabetes" placeholder="Tópicos abordados: monitoramento, hipoglicemia, cuidados com os pés, etc."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="examesSolicitados">Exames Solicitados</label>
+                            <textarea id="examesSolicitados" placeholder="Liste exames solicitados para acompanhamento"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="encaminhamentos">Encaminhamentos</label>
+                            <textarea id="encaminhamentos" placeholder="Oftalmologista, nefrologista, nutricionista, etc."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="retornoConsulta">Retorno</label>
+                            <input type="text" id="retornoConsulta" placeholder="Ex: 3 meses, 6 meses">
+                        </div>
+                    </div>
+
+                    <!-- OBSERVAÇÕES GERAIS -->
+                    <div class="section">
+                        <h2 class="section-title">Observações Gerais</h2>
+                        <div class="form-group">
+                            <label for="observacoes">Observações e Notas Adicionais</label>
+                            <textarea id="observacoes" placeholder="Qualquer informação adicional relevante para o acompanhamento"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- BOTÕES DE AÇÃO -->
+                    <div class="button-group">
+                        <button type="submit" class="btn-primary">
+                            💾 Salvar Consulta
+                        </button>
+                        <button type="button" class="btn-export" onclick="exportarConsulta()">
+                            📄 Exportar para Texto
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="limparFormulario()">
+                            🔄 Limpar Formulário
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="consultas-salvas" class="tab-content">
+                <div class="patients-list" id="consultasList">
+                    <!-- Consultas salvas aparecerão aqui -->
+                </div>
+            </div>
+
+            <!-- PREVIEW DE EXPORTAÇÃO -->
+            <div id="exportPreview" class="export-preview">
+                <h3>Preview da Exportação</h3>
+                <button type="button" class="btn-export" onclick="copiarTexto()">📋 Copiar Texto</button>
+                <button type="button" class="btn-secondary" onclick="baixarTexto()">⬇️ Baixar .txt</button>
+                <button type="button" class="btn-secondary" onclick="fecharPreview()">✖️ Fechar</button>
+                <hr style="margin: 15px 0;">
+                <pre id="exportText"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let consultas = JSON.parse(localStorage.getItem('consultas')) || [];
+
+        // Calcular idade ao alterar data de nascimento
+        document.getElementById('dataNascimento').addEventListener('change', function() {
+            const dataNasc = new Date(this.value);
+            const hoje = new Date();
+            let idade = hoje.getFullYear() - dataNasc.getFullYear();
+            const mes = hoje.getMonth() - dataNasc.getMonth();
+            if (mes < 0 || (mes === 0 && hoje.getDate() < dataNasc.getDate())) {
+                idade--;
+            }
+            document.getElementById('idade').value = idade;
+        });
+
+        // Calcular IMC
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value);
+            if (peso && altura) {
+                const imc = peso / (altura * altura);
+                document.getElementById('imc').value = imc.toFixed(1);
+            }
+        }
+
+        document.getElementById('peso').addEventListener('input', calcularIMC);
+        document.getElementById('altura').addEventListener('input', calcularIMC);
+
+        // Função para trocar abas
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+
+            if (tabName === 'consultas-salvas') {
+                atualizarListaConsultas();
+            }
+        }
+
+        // Função para coletar dados do formulário
+        function coletarDados() {
+            const dados = {
+                timestamp: new Date().toISOString(),
+                datosConsulta: new Date().toLocaleDateString('pt-BR'),
+
+                // Dados demográficos
+                nomeCompleto: document.getElementById('nomeCompleto').value,
+                dataNascimento: document.getElementById('dataNascimento').value,
+                idade: document.getElementById('idade').value,
+                sexo: document.getElementById('sexo').value,
+                telefone: document.getElementById('telefone').value,
+                email: document.getElementById('email').value,
+                profissao: document.getElementById('profissao').value,
+                escolaridade: document.getElementById('escolaridade').value,
+
+                // Tipo de diabetes
+                tipoDiabetes: document.querySelector('input[name="tipoDiabetes"]:checked')?.value || '',
+                dataDiagnostico: document.getElementById('dataDiagnostico').value,
+                tempoDiagnostico: document.getElementById('tempoDiagnostico').value,
+                comoDiagnosticado: document.getElementById('comoDiagnosticado').value,
+
+                // História da doença
+                queixaPrincipal: document.getElementById('queixaPrincipal').value,
+                sintomas: Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                    .filter(cb => cb.id.startsWith('sint'))
+                    .map(cb => cb.value),
+                outrosSintomas: document.getElementById('outrosSintomas').value,
+
+                // Controle glicêmico
+                glicemiaJejum: document.getElementById('glicemiaJejum').value,
+                glicemiaPosP: document.getElementById('glicemiaPosP').value,
+                hba1c: document.getElementById('hba1c').value,
+                monitoraGlicemia: document.querySelector('input[name="monitoraGlicemia"]:checked')?.value || '',
+                frequenciaMonitor: document.getElementById('frequenciaMonitor').value,
+                dispositivoMonitor: document.getElementById('dispositivoMonitor').value,
+                hipoglicemia: document.querySelector('input[name="hipoglicemia"]:checked')?.value || '',
+                frequenciaHipo: document.getElementById('frequenciaHipo').value,
+
+                // Medicações
+                usaInsulina: document.querySelector('input[name="usaInsulina"]:checked')?.value || '',
+                insulinaBasal: document.getElementById('insulinaBasal').value,
+                insulinaBolus: document.getElementById('insulinaBolus').value,
+                esquemaInsulina: document.getElementById('esquemaInsulina').value,
+                antidiabeticosOrais: document.getElementById('antidiabeticosOrais').value,
+                outrosMedicamentos: document.getElementById('outrosMedicamentos').value,
+                adesaoTratamento: document.getElementById('adesaoTratamento').value,
+
+                // História médica
+                comorbidades: Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                    .filter(cb => cb.id.startsWith('com'))
+                    .map(cb => cb.value),
+                outrasComorbidades: document.getElementById('outrasComorbidades').value,
+                cirurgiasPrevia: document.getElementById('cirurgiasPrevia').value,
+                alergias: document.getElementById('alergias').value,
+                hospitalizacoes: document.getElementById('hospitalizacoes').value,
+
+                // Histórico familiar
+                familiaresDiabetes: Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                    .filter(cb => cb.id.startsWith('fam'))
+                    .map(cb => cb.value),
+                detalhesFamiliares: document.getElementById('detalhesFamiliares').value,
+
+                // Hábitos de vida
+                alimentacao: document.getElementById('alimentacao').value,
+                segueDieta: document.querySelector('input[name="segueDieta"]:checked')?.value || '',
+                tipoDieta: document.getElementById('tipoDieta').value,
+                praticaExerc: document.querySelector('input[name="praticaExerc"]:checked')?.value || '',
+                tipoExercicio: document.getElementById('tipoExercicio').value,
+                tabagismo: document.querySelector('input[name="tabagismo"]:checked')?.value || '',
+                detalhesTabaco: document.getElementById('detalhesTabaco').value,
+                alcool: document.querySelector('input[name="alcool"]:checked')?.value || '',
+                detalhesAlcool: document.getElementById('detalhesAlcool').value,
+                sono: document.getElementById('sono').value,
+                estresse: document.getElementById('estresse').value,
+
+                // Exame físico
+                peso: document.getElementById('peso').value,
+                altura: document.getElementById('altura').value,
+                imc: document.getElementById('imc').value,
+                circunfAbdominal: document.getElementById('circunfAbdominal').value,
+                pa: document.getElementById('pa').value,
+                fc: document.getElementById('fc').value,
+                examePes: document.getElementById('examePes').value,
+                outrosAchados: document.getElementById('outrosAchados').value,
+
+                // Exames laboratoriais
+                dataExames: document.getElementById('dataExames').value,
+                glicemiaJejumLab: document.getElementById('glicemiaJejumLab').value,
+                hba1cLab: document.getElementById('hba1cLab').value,
+                frutosaminaLab: document.getElementById('frutosaminaLab').value,
+                colesterolTotal: document.getElementById('colesterolTotal').value,
+                hdl: document.getElementById('hdl').value,
+                ldl: document.getElementById('ldl').value,
+                triglicerides: document.getElementById('triglicerides').value,
+                creatinina: document.getElementById('creatinina').value,
+                tgf: document.getElementById('tgf').value,
+                albuminuria: document.getElementById('albuminuria').value,
+                tsh: document.getElementById('tsh').value,
+                vitaminaD: document.getElementById('vitaminaD').value,
+                outrosExames: document.getElementById('outrosExames').value,
+
+                // Complicações
+                retinopatia: document.querySelector('input[name="retinopatia"]:checked')?.value || '',
+                detalheRetino: document.getElementById('detalheRetino').value,
+                neuropatia: document.querySelector('input[name="neuropatia"]:checked')?.value || '',
+                detalheNeuro: document.getElementById('detalheNeuro').value,
+                nefropatia: document.querySelector('input[name="nefropatia"]:checked')?.value || '',
+                detalheNefro: document.getElementById('detalheNefro').value,
+                doencaCard: document.querySelector('input[name="doencaCard"]:checked')?.value || '',
+                detalheCardio: document.getElementById('detalheCardio').value,
+                peDiabetico: document.querySelector('input[name="peDiabetico"]:checked')?.value || '',
+                detalhePe: document.getElementById('detalhePe').value,
+
+                // Objetivos e plano
+                metaHba1c: document.getElementById('metaHba1c').value,
+                metaGlicemia: document.getElementById('metaGlicemia').value,
+                metaPeso: document.getElementById('metaPeso').value,
+                outrasMetasObj: document.getElementById('outrasMetasObj').value,
+                prescricaoMedicamentos: document.getElementById('prescricaoMedicamentos').value,
+                orientacaoDieta: document.getElementById('orientacaoDieta').value,
+                orientacaoExerc: document.getElementById('orientacaoExerc').value,
+                educacaoDiabetes: document.getElementById('educacaoDiabetes').value,
+                examesSolicitados: document.getElementById('examesSolicitados').value,
+                encaminhamentos: document.getElementById('encaminhamentos').value,
+                retornoConsulta: document.getElementById('retornoConsulta').value,
+                observacoes: document.getElementById('observacoes').value
+            };
+
+            return dados;
+        }
+
+        // Salvar consulta
+        document.getElementById('consultaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const dados = coletarDados();
+            consultas.push(dados);
+            localStorage.setItem('consultas', JSON.stringify(consultas));
+
+            mostrarMensagem('Consulta salva com sucesso!', 'success');
+
+            // Perguntar se quer exportar
+            if (confirm('Consulta salva! Deseja exportar para texto agora?')) {
+                exportarConsulta();
+            }
+        });
+
+        // Exportar consulta para texto
+        function exportarConsulta() {
+            const dados = coletarDados();
+            let texto = gerarTextoConsulta(dados);
+
+            document.getElementById('exportText').textContent = texto;
+            document.getElementById('exportPreview').style.display = 'block';
+            window.scrollTo(0, document.getElementById('exportPreview').offsetTop);
+        }
+
+        // Gerar texto formatado da consulta
+        function gerarTextoConsulta(dados) {
+            let texto = `╔════════════════════════════════════════════════════════════════════╗
+║         PRONTUÁRIO DE PRIMEIRA CONSULTA - DIABETES                ║
+║                  Dr. Jorge Cecílio                                ║
+╚════════════════════════════════════════════════════════════════════╝
+
+Data da Consulta: ${dados.datosConsulta}
+
+═══════════════════════════════════════════════════════════════════════
+1. DADOS DEMOGRÁFICOS
+═══════════════════════════════════════════════════════════════════════
+
+Nome Completo: ${dados.nomeCompleto}
+Data de Nascimento: ${dados.dataNascimento ? new Date(dados.dataNascimento).toLocaleDateString('pt-BR') : ''}
+Idade: ${dados.idade} anos
+Sexo: ${dados.sexo}
+Telefone: ${dados.telefone}
+E-mail: ${dados.email}
+Profissão: ${dados.profissao}
+Escolaridade: ${dados.escolaridade}
+
+═══════════════════════════════════════════════════════════════════════
+2. TIPO DE DIABETES E DIAGNÓSTICO
+═══════════════════════════════════════════════════════════════════════
+
+Tipo de Diabetes: ${dados.tipoDiabetes}
+Data do Diagnóstico: ${dados.dataDiagnostico ? new Date(dados.dataDiagnostico).toLocaleDateString('pt-BR') : ''}
+Tempo de Diagnóstico: ${dados.tempoDiagnostico}
+Como foi diagnosticado: ${dados.comoDiagnosticado}
+
+═══════════════════════════════════════════════════════════════════════
+3. HISTÓRIA DA DOENÇA ATUAL
+═══════════════════════════════════════════════════════════════════════
+
+Queixa Principal:
+${dados.queixaPrincipal}
+
+Sintomas Atuais: ${dados.sintomas.join(', ')}
+
+Outros Sintomas:
+${dados.outrosSintomas}
+
+═══════════════════════════════════════════════════════════════════════
+4. CONTROLE GLICÊMICO ATUAL
+═══════════════════════════════════════════════════════════════════════
+
+Glicemia de Jejum: ${dados.glicemiaJejum} mg/dL
+Glicemia Pós-Prandial: ${dados.glicemiaPosP} mg/dL
+HbA1c: ${dados.hba1c}%
+
+Monitora Glicemia em Casa: ${dados.monitoraGlicemia}
+Frequência de Monitoramento: ${dados.frequenciaMonitor}
+Dispositivo Usado: ${dados.dispositivoMonitor}
+
+Episódios de Hipoglicemia: ${dados.hipoglicemia}
+Detalhes das Hipoglicemias:
+${dados.frequenciaHipo}
+
+═══════════════════════════════════════════════════════════════════════
+5. MEDICAÇÕES EM USO
+═══════════════════════════════════════════════════════════════════════
+
+Usa Insulina: ${dados.usaInsulina}
+
+Insulina Basal: ${dados.insulinaBasal}
+Insulina Bolus: ${dados.insulinaBolus}
+
+Esquema Completo de Insulina:
+${dados.esquemaInsulina}
+
+Antidiabéticos Orais:
+${dados.antidiabeticosOrais}
+
+Outros Medicamentos:
+${dados.outrosMedicamentos}
+
+Avaliação de Adesão ao Tratamento:
+${dados.adesaoTratamento}
+
+═══════════════════════════════════════════════════════════════════════
+6. HISTÓRIA MÉDICA PREGRESSA
+═══════════════════════════════════════════════════════════════════════
+
+Comorbidades: ${dados.comorbidades.join(', ')}
+
+Outras Comorbidades:
+${dados.outrasComorbidades}
+
+Cirurgias Prévias:
+${dados.cirurgiasPrevia}
+
+Alergias:
+${dados.alergias}
+
+Hospitalizações Prévias:
+${dados.hospitalizacoes}
+
+═══════════════════════════════════════════════════════════════════════
+7. HISTÓRICO FAMILIAR
+═══════════════════════════════════════════════════════════════════════
+
+Familiares com Diabetes: ${dados.familiaresDiabetes.join(', ')}
+
+Detalhes do Histórico Familiar:
+${dados.detalhesFamiliares}
+
+═══════════════════════════════════════════════════════════════════════
+8. HÁBITOS DE VIDA
+═══════════════════════════════════════════════════════════════════════
+
+ALIMENTAÇÃO:
+${dados.alimentacao}
+
+Segue Dieta Específica: ${dados.segueDieta}
+Tipo de Dieta: ${dados.tipoDieta}
+
+ATIVIDADE FÍSICA:
+Pratica Exercícios: ${dados.praticaExerc}
+${dados.tipoExercicio}
+
+TABAGISMO: ${dados.tabagismo}
+Detalhes: ${dados.detalhesTabaco}
+
+CONSUMO DE ÁLCOOL: ${dados.alcool}
+Detalhes: ${dados.detalhesAlcool}
+
+PADRÃO DE SONO:
+${dados.sono}
+
+ESTRESSE E SAÚDE MENTAL:
+${dados.estresse}
+
+═══════════════════════════════════════════════════════════════════════
+9. EXAME FÍSICO
+═══════════════════════════════════════════════════════════════════════
+
+Peso: ${dados.peso} kg
+Altura: ${dados.altura} m
+IMC: ${dados.imc} kg/m²
+Circunferência Abdominal: ${dados.circunfAbdominal} cm
+Pressão Arterial: ${dados.pa} mmHg
+Frequência Cardíaca: ${dados.fc} bpm
+
+Exame dos Pés:
+${dados.examePes}
+
+Outros Achados do Exame Físico:
+${dados.outrosAchados}
+
+═══════════════════════════════════════════════════════════════════════
+10. EXAMES LABORATORIAIS RECENTES
+═══════════════════════════════════════════════════════════════════════
+
+Data dos Exames: ${dados.dataExames ? new Date(dados.dataExames).toLocaleDateString('pt-BR') : ''}
+
+CONTROLE GLICÊMICO:
+- Glicemia de Jejum: ${dados.glicemiaJejumLab} mg/dL
+- HbA1c: ${dados.hba1cLab}%
+- Frutosamina: ${dados.frutosaminaLab}
+
+PERFIL LIPÍDICO:
+- Colesterol Total: ${dados.colesterolTotal} mg/dL
+- HDL: ${dados.hdl} mg/dL
+- LDL: ${dados.ldl} mg/dL
+- Triglicérides: ${dados.triglicerides} mg/dL
+
+FUNÇÃO RENAL:
+- Creatinina: ${dados.creatinina} mg/dL
+- TFG: ${dados.tgf} mL/min/1.73m²
+- Albuminúria: ${dados.albuminuria}
+
+OUTROS:
+- TSH: ${dados.tsh}
+- Vitamina D: ${dados.vitaminaD}
+
+Outros Exames:
+${dados.outrosExames}
+
+═══════════════════════════════════════════════════════════════════════
+11. AVALIAÇÃO DE COMPLICAÇÕES DO DIABETES
+═══════════════════════════════════════════════════════════════════════
+
+RETINOPATIA DIABÉTICA: ${dados.retinopatia}
+${dados.detalheRetino}
+
+NEUROPATIA DIABÉTICA: ${dados.neuropatia}
+${dados.detalheNeuro}
+
+NEFROPATIA DIABÉTICA: ${dados.nefropatia}
+${dados.detalheNefro}
+
+DOENÇA CARDIOVASCULAR: ${dados.doencaCard}
+${dados.detalheCardio}
+
+PÉ DIABÉTICO: ${dados.peDiabetico}
+${dados.detalhePe}
+
+═══════════════════════════════════════════════════════════════════════
+12. OBJETIVOS E METAS DO TRATAMENTO
+═══════════════════════════════════════════════════════════════════════
+
+Meta de HbA1c: ${dados.metaHba1c}
+Meta de Glicemia: ${dados.metaGlicemia}
+Meta de Peso: ${dados.metaPeso}
+
+Outras Metas e Objetivos:
+${dados.outrasMetasObj}
+
+═══════════════════════════════════════════════════════════════════════
+13. PLANO TERAPÊUTICO PROPOSTO
+═══════════════════════════════════════════════════════════════════════
+
+PRESCRIÇÃO DE MEDICAMENTOS:
+${dados.prescricaoMedicamentos}
+
+ORIENTAÇÃO NUTRICIONAL:
+${dados.orientacaoDieta}
+
+ORIENTAÇÃO DE ATIVIDADE FÍSICA:
+${dados.orientacaoExerc}
+
+EDUCAÇÃO EM DIABETES:
+${dados.educacaoDiabetes}
+
+EXAMES SOLICITADOS:
+${dados.examesSolicitados}
+
+ENCAMINHAMENTOS:
+${dados.encaminhamentos}
+
+RETORNO: ${dados.retornoConsulta}
+
+═══════════════════════════════════════════════════════════════════════
+14. OBSERVAÇÕES GERAIS
+═══════════════════════════════════════════════════════════════════════
+
+${dados.observacoes}
+
+═══════════════════════════════════════════════════════════════════════
+
+Documento gerado em: ${new Date().toLocaleString('pt-BR')}
+Sistema de Primeira Consulta - Dr. Jorge Cecílio
+
+═══════════════════════════════════════════════════════════════════════`;
+
+            return texto;
+        }
+
+        // Copiar texto para clipboard
+        function copiarTexto() {
+            const texto = document.getElementById('exportText').textContent;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert('Texto copiado para a área de transferência!');
+            });
+        }
+
+        // Baixar como arquivo .txt
+        function baixarTexto() {
+            const texto = document.getElementById('exportText').textContent;
+            const dados = coletarDados();
+            const nomeArquivo = `Consulta_${dados.nomeCompleto.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.txt`;
+
+            const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = nomeArquivo;
+            link.click();
+        }
+
+        // Fechar preview
+        function fecharPreview() {
+            document.getElementById('exportPreview').style.display = 'none';
+        }
+
+        // Limpar formulário
+        function limparFormulario() {
+            if (confirm('Tem certeza que deseja limpar todos os campos?')) {
+                document.getElementById('consultaForm').reset();
+                mostrarMensagem('Formulário limpo!', 'info');
+            }
+        }
+
+        // Mostrar mensagem
+        function mostrarMensagem(texto, tipo) {
+            const msg = document.getElementById('message');
+            msg.textContent = texto;
+            msg.className = `message ${tipo}`;
+            msg.style.display = 'block';
+
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 3000);
+        }
+
+        // Atualizar lista de consultas salvas
+        function atualizarListaConsultas() {
+            const lista = document.getElementById('consultasList');
+
+            if (consultas.length === 0) {
+                lista.innerHTML = '<p style="text-align: center; color: #666;">Nenhuma consulta salva ainda.</p>';
+                return;
+            }
+
+            lista.innerHTML = '<h2>Consultas Salvas</h2>';
+
+            consultas.forEach((consulta, index) => {
+                const card = document.createElement('div');
+                card.className = 'patient-card';
+                card.innerHTML = `
+                    <h3>${consulta.nomeCompleto}</h3>
+                    <div class="patient-info">
+                        <div><strong>Data da Consulta:</strong> ${consulta.datosConsulta}</div>
+                        <div><strong>Tipo de Diabetes:</strong> ${consulta.tipoDiabetes}</div>
+                        <div><strong>Idade:</strong> ${consulta.idade} anos</div>
+                        <div><strong>HbA1c:</strong> ${consulta.hba1c || consulta.hba1cLab}%</div>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <button class="btn-export" onclick="visualizarConsulta(${index})">👁️ Visualizar</button>
+                        <button class="btn-secondary" onclick="excluirConsulta(${index})">🗑️ Excluir</button>
+                    </div>
+                `;
+                lista.appendChild(card);
+            });
+        }
+
+        // Visualizar consulta salva
+        function visualizarConsulta(index) {
+            const consulta = consultas[index];
+            const texto = gerarTextoConsulta(consulta);
+
+            document.getElementById('exportText').textContent = texto;
+            document.getElementById('exportPreview').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // Excluir consulta
+        function excluirConsulta(index) {
+            if (confirm('Tem certeza que deseja excluir esta consulta?')) {
+                consultas.splice(index, 1);
+                localStorage.setItem('consultas', JSON.stringify(consultas));
+                atualizarListaConsultas();
+                mostrarMensagem('Consulta excluída com sucesso!', 'success');
+            }
+        }
+
+        // Carregar consultas ao iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            atualizarListaConsultas();
+        });
+    </script>
+</body>
+</html>
