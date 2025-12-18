@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=src/index.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .loading {
+            text-align: center;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading">
+        <h1>Sistema de Atendimento Diabético</h1>
+        <div class="spinner"></div>
+        <p>Redirecionando para a aplicação...</p>
+        <p><a href="src/index.html" style="color: white;">Clique aqui se não for redirecionado automaticamente</a></p>
+    </div>
+    <script>
+        // Redireciona após 1 segundo (caso o meta refresh não funcione)
+        setTimeout(function() {
+            window.location.href = 'src/index.html';
+        }, 1000);
+    </script>
+</body>
+</html>
