@@ -21,6 +21,9 @@ Sistema completo para primeira consulta de pacientes com Diabetes Mellitus (Tipo
 ```
 DMprimeiravez/
 ├── README.md                 # Este arquivo
+├── index.html                # Interface web principal
+├── styles.css                # Estilos
+├── app.js                    # Lógica da aplicação
 ├── docs/                     # Documentação do sistema
 │   ├── GUIA_USO.md          # Guia de uso detalhado
 │   └── PROTOCOLO_CLINICO.md # Protocolo clínico
@@ -28,10 +31,6 @@ DMprimeiravez/
 │   ├── consulta_dm1.md      # Template para DM Tipo 1
 │   ├── consulta_dm2.md      # Template para DM Tipo 2
 │   └── consulta_completa.md # Template completo
-├── src/                      # Código fonte
-│   ├── index.html           # Interface web principal
-│   ├── styles.css           # Estilos
-│   └── app.js               # Lógica da aplicação
 └── exports/                  # Diretório para exportações
 ```
 
@@ -39,7 +38,10 @@ DMprimeiravez/
 
 ### Opção 1: Interface Web Interativa
 
-1. Abra o arquivo `src/index.html` no navegador
+**Acesse online:** https://jcdaher.github.io/DMprimeiravez/
+
+Ou abra localmente:
+1. Abra o arquivo `index.html` no navegador
 2. Preencha o formulário com os dados do paciente
 3. Clique em "Gerar Prontuário"
 4. Exporte nos formatos desejados (TXT, MD ou PDF)
