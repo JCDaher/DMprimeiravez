@@ -1,0 +1,36 @@
+# Arquivos exportados (prontuários de pacientes)
+exports/*.txt
+exports/*.md
+exports/*.pdf
+
+# Exceto o README do diretório
+!exports/README.md
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos temporários
+*.tmp
+*.temp
+*~
+
+# Arquivos de backup
+*.bak
+*.backup
+
+# Logs
+*.log
+
+# Arquivos do editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (se houver desenvolvimento futuro)
+node_modules/
+
+# Arquivos de ambiente
+.env
+.env.local
