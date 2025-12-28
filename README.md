@@ -2,19 +2,47 @@
 
 ## Visão Geral
 
-Sistema completo para primeira consulta de pacientes com Diabetes Mellitus (Tipo 1 e Tipo 2), desenvolvido para capturar todas as informações necessárias para um atendimento integral e gerar documentação estruturada para prontuário médico.
+Sistema completo para atendimento de pacientes com Diabetes Mellitus (Tipo 1 e Tipo 2), desenvolvido para capturar todas as informações necessárias para um atendimento integral e gerar documentação estruturada para prontuário médico. Suporta consultas iniciais e de seguimento para ambos os tipos de diabetes.
+
+## Tipos de Consultas Disponíveis
+
+### 1. DM Tipo 1 - Consulta Inicial
+- Avaliação completa para pacientes em primeira consulta
+- Foco em insulinoterapia e esquemas de aplicação
+- Avaliação de tecnologias (CGM, bombas de insulina)
+- Screening de autoimunidade
+
+### 2. DM Tipo 2 - Consulta Inicial
+- Avaliação completa para pacientes em primeira consulta
+- Foco em síndrome metabólica e fatores de risco cardiovascular
+- Avaliação de medicações orais e injetáveis
+- Estratificação de risco
+
+### 3. DM Tipo 1 - Seguimento
+- Consulta de retorno para acompanhamento
+- Avaliação de controle glicêmico e ajustes de insulina
+- Monitoramento de tecnologias
+- Avaliação de complicações
+
+### 4. DM Tipo 2 - Seguimento
+- Consulta de retorno para acompanhamento
+- Avaliação de controle e ajuste de medicações
+- Monitoramento de comorbidades
+- Avaliação de complicações
 
 ## Características Principais
 
+- ✅ 4 tipos de consultas (DM1/DM2 Inicial e Seguimento)
 - ✅ Anamnese completa e estruturada
-- ✅ Avaliação específica para DM1 e DM2
+- ✅ Avaliação específica para cada tipo de diabetes
 - ✅ Histórico familiar e fatores de risco
 - ✅ Avaliação de complicações crônicas
 - ✅ Registro de exames complementares
 - ✅ Avaliação nutricional e de hábitos de vida
 - ✅ Exportação em múltiplos formatos (TXT, MD, PDF)
-- ✅ Interface web interativa
+- ✅ Interface web interativa com seleção de tipo
 - ✅ Templates para agentes de IA
+- ✅ Prontuários incluem apenas campos preenchidos
 
 ## Estrutura do Projeto
 
