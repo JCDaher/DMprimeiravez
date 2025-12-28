@@ -170,6 +170,42 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="esquemaInsulina">Esquema de Insulina Atual</label>
+                        <textarea id="esquemaInsulina" name="esquemaInsulina" rows="6" placeholder="Detalhe:
+- Insulina basal: tipo, dose, horário
+- Insulina bolus/prandial: tipo, doses por refeição
+- Fator de sensibilidade (1U reduz quantos mg/dL)
+- Relação insulina:carboidrato (1U para quantos gramas de CHO)
+- Dose total diária"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Utiliza Tecnologia para Diabetes?</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="tecnologia" value="CGM"> CGM (Monitorização Contínua de Glicose)</label>
+                            <label><input type="checkbox" name="tecnologia" value="FGM"> FGM (Flash Glucose Monitoring - Freestyle Libre)</label>
+                            <label><input type="checkbox" name="tecnologia" value="Bomba"> Bomba de Insulina</label>
+                            <label><input type="checkbox" name="tecnologia" value="Sistema Híbrido"> Sistema Híbrido de Alça Fechada</label>
+                            <label><input type="checkbox" name="tecnologia" value="Nenhuma"> Nenhuma</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="detalhesTecnologia">Detalhes da Tecnologia</label>
+                        <textarea id="detalhesTecnologia" name="detalhesTecnologia" rows="3" placeholder="Marca, modelo, tempo de uso, dificuldades, satisfação com o dispositivo"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Realiza Contagem de Carboidratos?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="contagemCHO" value="Sim, regular"> Sim, regularmente</label>
+                            <label><input type="radio" name="contagemCHO" value="Sim, às vezes"> Sim, às vezes</label>
+                            <label><input type="radio" name="contagemCHO" value="Não"> Não</label>
+                            <label><input type="radio" name="contagemCHO" value="Desconhece"> Desconhece o método</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="controleGlicemico">Como está o Controle Glicêmico Atual?</label>
                         <select id="controleGlicemico" name="controleGlicemico">
                             <option value="">Selecione</option>
@@ -207,6 +243,50 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Hipoglicemias Severas (necessitou ajuda de terceiros)?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="hipoSevera" value="Nunca"> Nunca</label>
+                            <label><input type="radio" name="hipoSevera" value="Raro"> Raramente (1-2x/ano)</label>
+                            <label><input type="radio" name="hipoSevera" value="Ocasional"> Ocasionalmente (>2x/ano)</label>
+                            <label><input type="radio" name="hipoSevera" value="Frequente"> Frequentemente</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conscienciaHipo">Percepção de Hipoglicemia</label>
+                        <select id="conscienciaHipo" name="conscienciaHipo">
+                            <option value="">Selecione</option>
+                            <option value="Normal">Normal - percebe os sintomas</option>
+                            <option value="Reduzida">Reduzida - sintomas menos evidentes</option>
+                            <option value="Ausente">Ausente - hipoglicemia despercebida</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Episódios de Cetoacidose Diabética (CAD)?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="cetoacidose" value="Nunca"> Nunca</label>
+                            <label><input type="radio" name="cetoacidose" value="Na apresentação"> Apenas na apresentação inicial</label>
+                            <label><input type="radio" name="cetoacidose" value="Ocasional"> Ocasionalmente</label>
+                            <label><input type="radio" name="cetoacidose" value="Recorrente"> Recorrente</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="detalhesCetoacidose">Detalhes da Cetoacidose</label>
+                        <textarea id="detalhesCetoacidose" name="detalhesCetoacidose" rows="3" placeholder="Número de episódios, última ocorrência, causa (infecção, omissão de insulina, etc.), gravidade"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Faz Pesquisa de Cetonúria/Cetonemia?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="pesquisaCetona" value="Sim"> Sim, regularmente</label>
+                            <label><input type="radio" name="pesquisaCetona" value="Ocasional"> Apenas quando doente</label>
+                            <label><input type="radio" name="pesquisaCetona" value="Não"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label>Internações Prévias por Diabetes?</label>
                         <div class="radio-group">
                             <label><input type="radio" name="internacoes" value="Sim"> Sim</label>
@@ -228,21 +308,27 @@
                         <div class="checkbox-group">
                             <label><input type="checkbox" name="comorbidade" value="Hipertensão"> Hipertensão Arterial</label>
                             <label><input type="checkbox" name="comorbidade" value="Dislipidemia"> Dislipidemia</label>
-                            <label><input type="checkbox" name="comorbidade" value="Obesidade"> Obesidade</label>
                             <label><input type="checkbox" name="comorbidade" value="Doença Cardiovascular"> Doença Cardiovascular</label>
                             <label><input type="checkbox" name="comorbidade" value="AVC"> AVC Prévio</label>
                             <label><input type="checkbox" name="comorbidade" value="Doença Renal"> Doença Renal</label>
                             <label><input type="checkbox" name="comorbidade" value="Hipotireoidismo"> Hipotireoidismo</label>
                             <label><input type="checkbox" name="comorbidade" value="Hipertireoidismo"> Hipertireoidismo</label>
+                            <label><input type="checkbox" name="comorbidade" value="Doença Celíaca"> Doença Celíaca</label>
+                            <label><input type="checkbox" name="comorbidade" value="Doença de Addison"> Doença de Addison</label>
+                            <label><input type="checkbox" name="comorbidade" value="Vitiligo"> Vitiligo</label>
                             <label><input type="checkbox" name="comorbidade" value="Depressão"> Depressão</label>
                             <label><input type="checkbox" name="comorbidade" value="Ansiedade"> Ansiedade</label>
-                            <label><input type="checkbox" name="comorbidade" value="Apneia do Sono"> Apneia do Sono</label>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="outrasComorbidades">Outras Comorbidades</label>
-                        <textarea id="outrasComorbidades" name="outrasComorbidades" rows="3"></textarea>
+                        <label for="outrasComorbidades">Outras Comorbidades (incluindo outras doenças autoimunes)</label>
+                        <textarea id="outrasComorbidades" name="outrasComorbidades" rows="3" placeholder="Outras doenças autoimunes, gastrintestinais, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="screeningAutoimune">Screening para Doenças Autoimunes</label>
+                        <textarea id="screeningAutoimune" name="screeningAutoimune" rows="3" placeholder="Anti-TPO, Anti-Tg (tireoide), Anti-transglutaminase (celíaca), último rastreamento"></textarea>
                     </div>
 
                     <div class="form-group">

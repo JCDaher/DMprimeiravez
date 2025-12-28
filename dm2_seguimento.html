@@ -19,15 +19,15 @@
 
         <div class="progress-bar">
             <div class="progress-step active" data-step="1">Identificação</div>
-            <div class="progress-step" data-step="2">História Clínica</div>
+            <div class="progress-step" data-step="2">Evolução</div>
             <div class="progress-step" data-step="3">Exame Físico</div>
-            <div class="progress-step" data-step="4">Avaliação</div>
+            <div class="progress-step" data-step="4">Avaliação e Conduta</div>
         </div>
 
         <form id="consultaForm">
-            <!-- Seção 1: Identificação e Dados Demográficos -->
+            <!-- Seção 1: Identificação -->
             <section class="form-section active" data-section="1">
-                <h3>1. Identificação e Dados Demográficos</h3>
+                <h3>1. Identificação</h3>
 
                 <div class="form-group">
                     <label for="nome">Nome Completo</label>
@@ -43,58 +43,16 @@
                         <label for="idade">Idade</label>
                         <input type="number" id="idade" name="idade" readonly>
                     </div>
-                    <div class="form-group">
-                        <label for="sexo">Sexo</label>
-                        <select id="sexo" name="sexo">
-                            <option value="">Selecione</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Feminino">Feminino</option>
-                        </select>
-                    </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="cpf">CPF</label>
-                        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00">
+                        <label for="dataUltimaConsulta">Data da Última Consulta</label>
+                        <input type="date" id="dataUltimaConsulta" name="dataUltimaConsulta">
                     </div>
-                    <div class="form-group">
-                        <label for="rg">RG</label>
-                        <input type="text" id="rg" name="rg">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="endereco">Endereço Completo</label>
-                    <input type="text" id="endereco" name="endereco">
-                </div>
-
-                <div class="form-row">
                     <div class="form-group">
                         <label for="telefone">Telefone</label>
                         <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="email" id="email" name="email">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="profissao">Profissão</label>
-                        <input type="text" id="profissao" name="profissao">
-                    </div>
-                    <div class="form-group">
-                        <label for="estadoCivil">Estado Civil</label>
-                        <select id="estadoCivil" name="estadoCivil">
-                            <option value="">Selecione</option>
-                            <option value="Solteiro(a)">Solteiro(a)</option>
-                            <option value="Casado(a)">Casado(a)</option>
-                            <option value="Divorciado(a)">Divorciado(a)</option>
-                            <option value="Viúvo(a)">Viúvo(a)</option>
-                            <option value="União Estável">União Estável</option>
-                        </select>
                     </div>
                 </div>
 
@@ -103,79 +61,79 @@
                 </div>
             </section>
 
-            <!-- Seção 2: História Clínica -->
+            <!-- Seção 2: Evolução desde a Última Consulta -->
             <section class="form-section" data-section="2">
-                <h3>2. História Clínica</h3>
+                <h3>2. Evolução desde a Última Consulta</h3>
 
                 <div class="subsection">
-                    <h4>2.1 Queixa Principal e HDA</h4>
+                    <h4>2.1 Queixas e Intercorrências</h4>
                     <div class="form-group">
-                        <label for="queixaPrincipal">Queixa Principal *</label>
-                        <textarea id="queixaPrincipal" name="queixaPrincipal" rows="3" required></textarea>
+                        <label for="queixaPrincipal">Queixas Atuais</label>
+                        <textarea id="queixaPrincipal" name="queixaPrincipal" rows="3" placeholder="Sintomas ou queixas que o paciente apresenta hoje"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="hda">História da Doença Atual</label>
-                        <textarea id="hda" name="hda" rows="5" placeholder="Descreva a evolução dos sintomas, quando começaram, fatores de melhora/piora, etc."></textarea>
+                        <label for="hda">Intercorrências desde a Última Consulta</label>
+                        <textarea id="hda" name="hda" rows="4" placeholder="Internações, emergências, novas doenças, eventos adversos, etc."></textarea>
                     </div>
                 </div>
 
                 <div class="subsection">
-                    <h4>2.2 História da Diabetes</h4>
+                    <h4>2.2 Adesão ao Tratamento</h4>
 
                     <div class="form-group">
-                        <label for="tipoDiabetes">Tipo de Diabetes *</label>
-                        <select id="tipoDiabetes" name="tipoDiabetes" required onchange="toggleDiabetesType()">
-                            <option value="">Selecione</option>
-                            <option value="DM1">Diabetes Mellitus Tipo 1</option>
-                            <option value="DM2">Diabetes Mellitus Tipo 2</option>
-                            <option value="Gestacional">Diabetes Gestacional</option>
-                            <option value="MODY">MODY</option>
-                            <option value="Secundário">Diabetes Secundário</option>
-                            <option value="Outro">Outro</option>
-                        </select>
+                        <label for="medicamentosAtuais">Medicamentos em Uso (nome, dose, frequência)</label>
+                        <textarea id="medicamentosAtuais" name="medicamentosAtuais" rows="5" placeholder="Liste todos os medicamentos que o paciente está tomando"></textarea>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="anosDiagnostico">Anos desde o Diagnóstico</label>
-                            <input type="number" id="anosDiagnostico" name="anosDiagnostico" min="0" step="0.5">
-                        </div>
-                        <div class="form-group">
-                            <label for="idadeDiagnostico">Idade ao Diagnóstico</label>
-                            <input type="number" id="idadeDiagnostico" name="idadeDiagnostico" min="0">
+                    <div class="form-group">
+                        <label>Adesão aos Medicamentos</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="adesaoMed" value="Boa"> Boa (toma regularmente)</label>
+                            <label><input type="radio" name="adesaoMed" value="Parcial"> Parcial (esquece às vezes)</label>
+                            <label><input type="radio" name="adesaoMed" value="Ruim"> Ruim (frequentemente esquece)</label>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="circunstanciaDiagnostico">Circunstância do Diagnóstico</label>
-                        <textarea id="circunstanciaDiagnostico" name="circunstanciaDiagnostico" rows="3" placeholder="Como foi descoberto o diabetes? Exame de rotina, sintomas, internação, etc."></textarea>
+                        <label for="motivosNaoAdesao">Motivos de Não-Adesão ou Dificuldades</label>
+                        <textarea id="motivosNaoAdesao" name="motivosNaoAdesao" rows="3" placeholder="Efeitos colaterais, esquecimento, custo, falta de acesso, etc."></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Tratamentos Prévios e Atuais</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="tratamento" value="Dieta"> Dieta</label>
-                            <label><input type="checkbox" name="tratamento" value="Exercício"> Exercício Físico</label>
-                            <label><input type="checkbox" name="tratamento" value="Antidiabéticos Orais"> Antidiabéticos Orais</label>
-                            <label><input type="checkbox" name="tratamento" value="Insulina"> Insulina</label>
-                            <label><input type="checkbox" name="tratamento" value="GLP-1"> Agonistas GLP-1</label>
-                            <label><input type="checkbox" name="tratamento" value="Outros"> Outros</label>
+                        <label>Adesão à Dieta</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="adesaoDieta" value="Boa"> Boa</label>
+                            <label><input type="radio" name="adesaoDieta" value="Regular"> Regular</label>
+                            <label><input type="radio" name="adesaoDieta" value="Ruim"> Ruim</label>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="medicamentosAtuais">Medicamentos Atuais (nome, dose, frequência)</label>
-                        <textarea id="medicamentosAtuais" name="medicamentosAtuais" rows="5" placeholder="Liste todos os medicamentos em uso com suas respectivas doses e frequências"></textarea>
+                        <label>Pratica Atividade Física Regularmente?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="adesaoAtividade" value="Sim"> Sim</label>
+                            <label><input type="radio" name="adesaoAtividade" value="Não"> Não</label>
+                            <label><input type="radio" name="adesaoAtividade" value="Irregular"> Irregular</label>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="controleGlicemico">Como está o Controle Glicêmico Atual?</label>
+                        <label for="detalhesAtividade">Detalhes da Atividade Física</label>
+                        <input type="text" id="detalhesAtividade" name="detalhesAtividade" placeholder="Tipo, frequência, duração">
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>2.3 Controle Glicêmico e Monitorização</h4>
+
+                    <div class="form-group">
+                        <label for="controleGlicemico">Percepção do Controle Glicêmico</label>
                         <select id="controleGlicemico" name="controleGlicemico">
                             <option value="">Selecione</option>
-                            <option value="Bom">Bom</option>
-                            <option value="Regular">Regular</option>
-                            <option value="Ruim">Ruim</option>
+                            <option value="Melhorou">Melhorou desde a última consulta</option>
+                            <option value="Estável">Estável</option>
+                            <option value="Piorou">Piorou</option>
                             <option value="Não sabe">Não sabe informar</option>
                         </select>
                     </div>
@@ -194,7 +152,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Episódios de Hipoglicemia?</label>
+                        <label for="valoresGlicemia">Valores Glicêmicos Recentes (média)</label>
+                        <textarea id="valoresGlicemia" name="valoresGlicemia" rows="3" placeholder="Jejum, pré-prandial, pós-prandial, valores mínimos e máximos"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Episódios de Hipoglicemia desde a Última Consulta?</label>
                         <div class="radio-group">
                             <label><input type="radio" name="hipoglicemia" value="Sim"> Sim</label>
                             <label><input type="radio" name="hipoglicemia" value="Não"> Não</label>
@@ -203,241 +166,47 @@
 
                     <div class="form-group" id="detalhesHipoglicemia" style="display:none;">
                         <label for="frequenciaHipoglicemia">Detalhes das Hipoglicemias</label>
-                        <textarea id="frequenciaHipoglicemia" name="frequenciaHipoglicemia" rows="3" placeholder="Frequência, sintomas, horários mais comuns, tratamento"></textarea>
+                        <textarea id="frequenciaHipoglicemia" name="frequenciaHipoglicemia" rows="3" placeholder="Frequência, sintomas, horários, gravidade, tratamento"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Internações Prévias por Diabetes?</label>
+                        <label>Episódios de Hiperglicemia Sintomática?</label>
                         <div class="radio-group">
-                            <label><input type="radio" name="internacoes" value="Sim"> Sim</label>
-                            <label><input type="radio" name="internacoes" value="Não"> Não</label>
+                            <label><input type="radio" name="hiperglicemia" value="Sim"> Sim</label>
+                            <label><input type="radio" name="hiperglicemia" value="Não"> Não</label>
                         </div>
-                    </div>
-
-                    <div class="form-group" id="detalhesInternacoes" style="display:none;">
-                        <label for="motivoInternacoes">Motivo das Internações</label>
-                        <textarea id="motivoInternacoes" name="motivoInternacoes" rows="3" placeholder="Cetoacidose, hipoglicemia grave, complicações, etc."></textarea>
                     </div>
                 </div>
 
                 <div class="subsection">
-                    <h4>2.3 Comorbidades e Antecedentes</h4>
+                    <h4>2.4 Mudanças Clínicas e Novas Comorbidades</h4>
 
                     <div class="form-group">
-                        <label>Comorbidades</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="comorbidade" value="Hipertensão"> Hipertensão Arterial</label>
-                            <label><input type="checkbox" name="comorbidade" value="Dislipidemia"> Dislipidemia</label>
-                            <label><input type="checkbox" name="comorbidade" value="Obesidade"> Obesidade</label>
-                            <label><input type="checkbox" name="comorbidade" value="Doença Cardiovascular"> Doença Cardiovascular</label>
-                            <label><input type="checkbox" name="comorbidade" value="AVC"> AVC Prévio</label>
-                            <label><input type="checkbox" name="comorbidade" value="Doença Renal"> Doença Renal</label>
-                            <label><input type="checkbox" name="comorbidade" value="Hipotireoidismo"> Hipotireoidismo</label>
-                            <label><input type="checkbox" name="comorbidade" value="Hipertireoidismo"> Hipertireoidismo</label>
-                            <label><input type="checkbox" name="comorbidade" value="Depressão"> Depressão</label>
-                            <label><input type="checkbox" name="comorbidade" value="Ansiedade"> Ansiedade</label>
-                            <label><input type="checkbox" name="comorbidade" value="Apneia do Sono"> Apneia do Sono</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="outrasComorbidades">Outras Comorbidades</label>
-                        <textarea id="outrasComorbidades" name="outrasComorbidades" rows="3"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="cirurgiasPrevias">Cirurgias Prévias</label>
-                        <textarea id="cirurgiasPrevias" name="cirurgiasPrevias" rows="3" placeholder="Liste as cirurgias e suas datas aproximadas"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="alergias">Alergias Medicamentosas</label>
-                        <textarea id="alergias" name="alergias" rows="2" placeholder="Liste medicamentos que causam alergia e tipo de reação"></textarea>
+                        <label for="novasComorbidades">Novas Comorbidades ou Mudanças no Quadro Clínico</label>
+                        <textarea id="novasComorbidades" name="novasComorbidades" rows="3" placeholder="Diagnósticos novos, mudanças em doenças pré-existentes"></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="outrosMedicamentos">Outros Medicamentos em Uso (não relacionados ao diabetes)</label>
-                        <textarea id="outrosMedicamentos" name="outrosMedicamentos" rows="3"></textarea>
+                        <textarea id="outrosMedicamentos" name="outrosMedicamentos" rows="3" placeholder="Medicamentos para outras condições"></textarea>
                     </div>
                 </div>
 
                 <div class="subsection">
-                    <h4>2.4 Histórico Familiar</h4>
+                    <h4>2.5 Avaliação de Sintomas de Complicações</h4>
 
                     <div class="form-group">
-                        <label>Diabetes em Familiares?</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="familiarDM" value="Pai"> Pai</label>
-                            <label><input type="checkbox" name="familiarDM" value="Mãe"> Mãe</label>
-                            <label><input type="checkbox" name="familiarDM" value="Irmãos"> Irmãos</label>
-                            <label><input type="checkbox" name="familiarDM" value="Avós"> Avós</label>
-                            <label><input type="checkbox" name="familiarDM" value="Tios"> Tios</label>
-                            <label><input type="checkbox" name="familiarDM" value="Filhos"> Filhos</label>
-                        </div>
+                        <label for="sintomasNovos">Sintomas Novos ou Piora de Sintomas Existentes</label>
+                        <textarea id="sintomasNovos" name="sintomasNovos" rows="4" placeholder="Visuais, neurológicos (formigamento, dormência, dor), cardiovasculares, renais, gastrointestinais, problemas nos pés, etc."></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Outras Doenças em Familiares</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="familiarOutras" value="Hipertensão"> Hipertensão</label>
-                            <label><input type="checkbox" name="familiarOutras" value="IAM"> Infarto</label>
-                            <label><input type="checkbox" name="familiarOutras" value="AVC"> AVC</label>
-                            <label><input type="checkbox" name="familiarOutras" value="Obesidade"> Obesidade</label>
-                            <label><input type="checkbox" name="familiarOutras" value="Câncer"> Câncer</label>
-                            <label><input type="checkbox" name="familiarOutras" value="Doença Renal"> Doença Renal</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="detalhesHistoricoFamiliar">Detalhes do Histórico Familiar</label>
-                        <textarea id="detalhesHistoricoFamiliar" name="detalhesHistoricoFamiliar" rows="3" placeholder="Detalhe idade de diagnóstico, complicações, etc."></textarea>
-                    </div>
-                </div>
-
-                <div class="subsection">
-                    <h4>2.5 Hábitos de Vida</h4>
-
-                    <div class="form-group">
-                        <label for="alimentacao">Padrão Alimentar</label>
-                        <textarea id="alimentacao" name="alimentacao" rows="4" placeholder="Descreva o padrão alimentar: número de refeições, tipos de alimentos, consumo de doces, refrigerantes, etc."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Acompanhamento Nutricional?</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="nutricionista" value="Sim"> Sim</label>
-                            <label><input type="radio" name="nutricionista" value="Não"> Não</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Atividade Física</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="atividadeFisica" value="Sedentário"> Sedentário</label>
-                            <label><input type="radio" name="atividadeFisica" value="Leve"> Leve</label>
-                            <label><input type="radio" name="atividadeFisica" value="Moderado"> Moderado</label>
-                            <label><input type="radio" name="atividadeFisica" value="Intenso"> Intenso</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="detalhesAtividade">Detalhes da Atividade Física</label>
-                        <input type="text" id="detalhesAtividade" name="detalhesAtividade" placeholder="Tipo, frequência, duração">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Tabagismo</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="tabagismo" value="Nunca fumou"> Nunca fumou</label>
-                            <label><input type="radio" name="tabagismo" value="Ex-fumante"> Ex-fumante</label>
-                            <label><input type="radio" name="tabagismo" value="Fumante"> Fumante</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group" id="detalhesTabagismo" style="display:none;">
-                        <label for="cargaTabagica">Carga Tabágica</label>
-                        <input type="text" id="cargaTabagica" name="cargaTabagica" placeholder="Anos-maço ou cigarros/dia e tempo de uso">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Etilismo</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="etilismo" value="Não"> Não</label>
-                            <label><input type="radio" name="etilismo" value="Social"> Social</label>
-                            <label><input type="radio" name="etilismo" value="Regular"> Regular</label>
-                            <label><input type="radio" name="etilismo" value="Abusivo"> Abusivo</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group" id="detalhesEtilismo" style="display:none;">
-                        <label for="frequenciaAlcool">Frequência e Quantidade</label>
-                        <input type="text" id="frequenciaAlcool" name="frequenciaAlcool" placeholder="Tipo de bebida, quantidade, frequência">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="sono">Padrão de Sono</label>
-                        <input type="text" id="sono" name="sono" placeholder="Horas de sono, qualidade, dificuldades">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Estresse/Ansiedade</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="estresse" value="Mínimo"> Mínimo</label>
-                            <label><input type="radio" name="estresse" value="Leve"> Leve</label>
-                            <label><input type="radio" name="estresse" value="Moderado"> Moderado</label>
-                            <label><input type="radio" name="estresse" value="Severo"> Severo</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="subsection">
-                    <h4>2.6 Avaliação de Complicações Crônicas</h4>
-
-                    <div class="form-group">
-                        <label>Sintomas Visuais</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="sintomasVisuais" value="Visão turva"> Visão turva</label>
-                            <label><input type="checkbox" name="sintomasVisuais" value="Manchas"> Manchas/pontos flutuantes</label>
-                            <label><input type="checkbox" name="sintomasVisuais" value="Perda visual"> Perda visual</label>
-                            <label><input type="checkbox" name="sintomasVisuais" value="Nenhum"> Nenhum</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="ultimoOftalmo">Última Consulta com Oftalmologista</label>
-                        <input type="text" id="ultimoOftalmo" name="ultimoOftalmo" placeholder="Data aproximada e resultado">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Sintomas Renais</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="sintomasRenais" value="Edema"> Edema</label>
-                            <label><input type="checkbox" name="sintomasRenais" value="Urina espumosa"> Urina espumosa</label>
-                            <label><input type="checkbox" name="sintomasRenais" value="Alteração urinária"> Alteração no volume urinário</label>
-                            <label><input type="checkbox" name="sintomasRenais" value="Nenhum"> Nenhum</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Sintomas Neurológicos</label>
+                        <label>Sintomas Neurológicos nos Pés</label>
                         <div class="checkbox-group">
                             <label><input type="checkbox" name="sintomasNeuro" value="Formigamento"> Formigamento</label>
                             <label><input type="checkbox" name="sintomasNeuro" value="Dormência"> Dormência</label>
                             <label><input type="checkbox" name="sintomasNeuro" value="Dor neuropática"> Dor neuropática</label>
-                            <label><input type="checkbox" name="sintomasNeuro" value="Queimação"> Queimação nos pés</label>
-                            <label><input type="checkbox" name="sintomasNeuro" value="Perda sensibilidade"> Perda de sensibilidade</label>
                             <label><input type="checkbox" name="sintomasNeuro" value="Nenhum"> Nenhum</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Sintomas Cardiovasculares</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="sintomasCardio" value="Dor precordial"> Dor precordial</label>
-                            <label><input type="checkbox" name="sintomasCardio" value="Dispneia"> Dispneia aos esforços</label>
-                            <label><input type="checkbox" name="sintomasCardio" value="Palpitações"> Palpitações</label>
-                            <label><input type="checkbox" name="sintomasCardio" value="Claudicação"> Claudicação</label>
-                            <label><input type="checkbox" name="sintomasCardio" value="Nenhum"> Nenhum</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Sintomas Gastrointestinais</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="sintomasGastro" value="Gastroparesia"> Gastroparesia</label>
-                            <label><input type="checkbox" name="sintomasGastro" value="Diarreia"> Diarreia</label>
-                            <label><input type="checkbox" name="sintomasGastro" value="Constipação"> Constipação</label>
-                            <label><input type="checkbox" name="sintomasGastro" value="Nenhum"> Nenhum</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Sintomas Geniturinários</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="sintomasGenito" value="Disfunção erétil"> Disfunção erétil</label>
-                            <label><input type="checkbox" name="sintomasGenito" value="Bexiga neurogênica"> Bexiga neurogênica</label>
-                            <label><input type="checkbox" name="sintomasGenito" value="Infecções urinárias"> Infecções urinárias recorrentes</label>
-                            <label><input type="checkbox" name="sintomasGenito" value="Nenhum"> Nenhum</label>
                         </div>
                     </div>
 
@@ -445,11 +214,15 @@
                         <label>Problemas nos Pés</label>
                         <div class="checkbox-group">
                             <label><input type="checkbox" name="sintomasPes" value="Úlceras"> Úlceras</label>
+                            <label><input type="checkbox" name="sintomasPes" value="Feridas"> Feridas/lesões</label>
                             <label><input type="checkbox" name="sintomasPes" value="Calosidades"> Calosidades</label>
-                            <label><input type="checkbox" name="sintomasPes" value="Deformidades"> Deformidades</label>
-                            <label><input type="checkbox" name="sintomasPes" value="Amputação"> Amputação prévia</label>
                             <label><input type="checkbox" name="sintomasPes" value="Nenhum"> Nenhum</label>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ultimoOftalmo">Realizou Avaliação Oftalmológica no Último Ano?</label>
+                        <input type="text" id="ultimoOftalmo" name="ultimoOftalmo" placeholder="Sim/Não, data e resultado se disponível">
                     </div>
                 </div>
 
@@ -642,12 +415,12 @@
                 </div>
             </section>
 
-            <!-- Seção 4: Exames e Avaliação -->
+            <!-- Seção 4: Avaliação e Conduta -->
             <section class="form-section" data-section="4">
-                <h3>4. Exames Complementares e Avaliação</h3>
+                <h3>4. Avaliação e Conduta</h3>
 
                 <div class="subsection">
-                    <h4>4.1 Exames Laboratoriais</h4>
+                    <h4>4.1 Exames Laboratoriais Recentes</h4>
 
                     <div class="form-row">
                         <div class="form-group">
@@ -756,46 +529,16 @@
                 </div>
 
                 <div class="subsection">
-                    <h4>4.2 Exames de Imagem e Especializados</h4>
+                    <h4>4.2 Outros Exames Realizados</h4>
 
                     <div class="form-group">
-                        <label for="ecg">Eletrocardiograma</label>
-                        <textarea id="ecg" name="ecg" rows="2" placeholder="Resultado ou data do último ECG"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="fundoscopia">Fundoscopia/Mapeamento de Retina</label>
-                        <textarea id="fundoscopia" name="fundoscopia" rows="2" placeholder="Resultado ou data do último exame"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="ecocardiograma">Ecocardiograma</label>
-                        <textarea id="ecocardiograma" name="ecocardiograma" rows="2" placeholder="Resultado ou data"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="dopplerMMII">Doppler de MMII</label>
-                        <textarea id="dopplerMMII" name="dopplerMMII" rows="2" placeholder="Resultado ou data"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="outrosExamesImagem">Outros Exames de Imagem/Especializados</label>
-                        <textarea id="outrosExamesImagem" name="outrosExamesImagem" rows="3"></textarea>
+                        <label for="outrosExames">Outros Exames Recentes</label>
+                        <textarea id="outrosExamesImagem" name="outrosExamesImagem" rows="3" placeholder="ECG, fundoscopia, ecocardiograma, doppler, etc. - informe resultado e data"></textarea>
                     </div>
                 </div>
 
                 <div class="subsection">
-                    <h4>4.3 Avaliação e Diagnóstico</h4>
-
-                    <div class="form-group">
-                        <label for="diagnosticoPrincipal">Diagnóstico Principal</label>
-                        <textarea id="diagnosticoPrincipal" name="diagnosticoPrincipal" rows="2" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="diagnosticosSecundarios">Diagnósticos Secundários</label>
-                        <textarea id="diagnosticosSecundarios" name="diagnosticosSecundarios" rows="3"></textarea>
-                    </div>
+                    <h4>4.3 Avaliação do Controle e Complicações</h4>
 
                     <div class="form-group">
                         <label for="classificacaoControle">Classificação do Controle Glicêmico</label>
@@ -809,71 +552,42 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Complicações Presentes</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="complicacoes" value="Retinopatia"> Retinopatia</label>
-                            <label><input type="checkbox" name="complicacoes" value="Nefropatia"> Nefropatia</label>
-                            <label><input type="checkbox" name="complicacoes" value="Neuropatia periférica"> Neuropatia periférica</label>
-                            <label><input type="checkbox" name="complicacoes" value="Neuropatia autonômica"> Neuropatia autonômica</label>
-                            <label><input type="checkbox" name="complicacoes" value="Pé diabético"> Pé diabético</label>
-                            <label><input type="checkbox" name="complicacoes" value="Doença cardiovascular"> Doença cardiovascular</label>
-                            <label><input type="checkbox" name="complicacoes" value="Doença cerebrovascular"> Doença cerebrovascular</label>
-                            <label><input type="checkbox" name="complicacoes" value="Doença vascular periférica"> Doença vascular periférica</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="estadiamentoComplicacoes">Estadiamento das Complicações</label>
-                        <textarea id="estadiamentoComplicacoes" name="estadiamentoComplicacoes" rows="3" placeholder="Detalhe o grau/estágio de cada complicação identificada"></textarea>
+                        <label for="evolucaoComplicacoes">Evolução das Complicações</label>
+                        <textarea id="evolucaoComplicacoes" name="evolucaoComplicacoes" rows="3" placeholder="Novas complicações identificadas ou mudança no estágio das complicações existentes"></textarea>
                     </div>
                 </div>
 
                 <div class="subsection">
-                    <h4>4.4 Plano Terapêutico</h4>
+                    <h4>4.4 Conduta e Ajustes Terapêuticos</h4>
 
                     <div class="form-group">
-                        <label for="metasGlicemicas">Metas Glicêmicas Individualizadas</label>
-                        <textarea id="metasGlicemicas" name="metasGlicemicas" rows="3" placeholder="HbA1c alvo, glicemia de jejum, pós-prandial, etc."></textarea>
+                        <label for="avaliacaoControle">Avaliação do Controle Atual</label>
+                        <textarea id="avaliacaoControle" name="avaliacaoControle" rows="3" placeholder="Análise do controle glicêmico, adesão, e resposta ao tratamento atual"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="planoMedicamentoso">Plano Medicamentoso</label>
-                        <textarea id="planoMedicamentoso" name="planoMedicamentoso" rows="5" placeholder="Prescrição detalhada: medicamentos, doses, horários, ajustes"></textarea>
+                        <label for="ajustesMedicamentosos">Ajustes Medicamentosos</label>
+                        <textarea id="ajustesMedicamentosos" name="ajustesMedicamentosos" rows="5" placeholder="Mudanças de dose, introdução ou retirada de medicamentos, justificativa dos ajustes"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="orientacoesDieta">Orientações Dietéticas</label>
-                        <textarea id="orientacoesDieta" name="orientacoesDieta" rows="4" placeholder="Orientações nutricionais, encaminhamento para nutricionista"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="orientacoesAtividade">Orientações sobre Atividade Física</label>
-                        <textarea id="orientacoesAtividade" name="orientacoesAtividade" rows="3"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="automonitoramento">Plano de Automonitoramento</label>
-                        <textarea id="automonitoramento" name="automonitoramento" rows="3" placeholder="Frequência de medições, horários, uso de CGM, etc."></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="educacaoDiabetes">Educação em Diabetes</label>
-                        <textarea id="educacaoDiabetes" name="educacaoDiabetes" rows="4" placeholder="Tópicos discutidos, orientações sobre hipoglicemia, cuidados com os pés, etc."></textarea>
+                        <label for="orientacoes">Orientações e Reforços</label>
+                        <textarea id="orientacoes" name="orientacoes" rows="4" placeholder="Dieta, atividade física, automonitoramento, cuidados com os pés, reconhecimento de hipo/hiperglicemia"></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="examesSolicitados">Exames Solicitados</label>
-                        <textarea id="examesSolicitados" name="examesSolicitados" rows="4" placeholder="Liste os exames solicitados e periodicidade"></textarea>
+                        <textarea id="examesSolicitados" name="examesSolicitados" rows="3" placeholder="HbA1c, lipidograma, função renal, etc."></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="encaminhamentos">Encaminhamentos</label>
-                        <textarea id="encaminhamentos" name="encaminhamentos" rows="3" placeholder="Oftalmologista, nefrologista, cardiologista, nutricionista, etc."></textarea>
+                        <textarea id="encaminhamentos" name="encaminhamentos" rows="2" placeholder="Especialistas, se necessário"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="vacinacao">Vacinação</label>
-                        <textarea id="vacinacao" name="vacinacao" rows="2" placeholder="Status vacinal, vacinas recomendadas (influenza, pneumocócica, etc.)"></textarea>
+                        <label for="metasProximaConsulta">Metas para a Próxima Consulta</label>
+                        <textarea id="metasProximaConsulta" name="metasProximaConsulta" rows="3" placeholder="Objetivos glicêmicos, mudanças de estilo de vida, exames a trazer"></textarea>
                     </div>
 
                     <div class="form-group">
@@ -883,7 +597,7 @@
 
                     <div class="form-group">
                         <label for="observacoes">Observações Adicionais</label>
-                        <textarea id="observacoes" name="observacoes" rows="4"></textarea>
+                        <textarea id="observacoes" name="observacoes" rows="3"></textarea>
                     </div>
                 </div>
 
