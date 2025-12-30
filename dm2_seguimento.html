@@ -83,7 +83,20 @@
 
                     <div class="form-group">
                         <label for="medicamentosAtuais">Medicamentos em Uso (nome, dose, frequência)</label>
-                        <textarea id="medicamentosAtuais" name="medicamentosAtuais" rows="5" placeholder="Liste todos os medicamentos que o paciente está tomando"></textarea>
+                        <textarea id="medicamentosAtuais" name="medicamentosAtuais" rows="5" placeholder="Liste antidiabéticos orais, agonistas GLP-1, SGLT2, outros medicamentos"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Faz uso de Insulina?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="usaInsulina" value="Sim" onclick="document.getElementById('campoEsquemaInsulina').style.display='block'"> Sim</label>
+                            <label><input type="radio" name="usaInsulina" value="Não" onclick="document.getElementById('campoEsquemaInsulina').style.display='none'"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="campoEsquemaInsulina" style="display:none;">
+                        <label for="esquemaInsulina">Esquema de Insulina</label>
+                        <textarea id="esquemaInsulina" name="esquemaInsulina" rows="5" placeholder="Tipo de insulina, dose, horários (ex: NPH 20U manhã + 15U noite, ou basal + bolus)"></textarea>
                     </div>
 
                     <div class="form-group">
@@ -179,7 +192,59 @@
                 </div>
 
                 <div class="subsection">
-                    <h4>2.4 Mudanças Clínicas e Novas Comorbidades</h4>
+                    <h4>2.4 Comorbidades e Fatores de Risco Cardiovascular</h4>
+
+                    <div class="form-group">
+                        <label><strong>Principais Fatores de Risco Cardiovascular</strong></label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hipertensão Arterial</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="hipertensao" value="Sim"> Sim</label>
+                            <label><input type="radio" name="hipertensao" value="Não"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Dislipidemia</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="dislipidemia" value="Sim"> Sim</label>
+                            <label><input type="radio" name="dislipidemia" value="Não"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Obesidade</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="obesidade" value="Sim"> Sim</label>
+                            <label><input type="radio" name="obesidade" value="Não"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tabagismo</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="tabagismo" value="Nunca fumou"> Nunca fumou</label>
+                            <label><input type="radio" name="tabagismo" value="Ex-fumante"> Ex-fumante</label>
+                            <label><input type="radio" name="tabagismo" value="Fumante"> Fumante</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><strong>Outras Comorbidades</strong></label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="comorbidade" value="Doença Cardiovascular"> Doença Cardiovascular</label>
+                            <label><input type="checkbox" name="comorbidade" value="IAM prévio"> IAM Prévio</label>
+                            <label><input type="checkbox" name="comorbidade" value="AVC"> AVC Prévio</label>
+                            <label><input type="checkbox" name="comorbidade" value="Doença Renal"> Doença Renal Crônica</label>
+                            <label><input type="checkbox" name="comorbidade" value="Esteatose Hepática"> Esteatose Hepática</label>
+                            <label><input type="checkbox" name="comorbidade" value="Apneia do Sono"> Apneia do Sono</label>
+                            <label><input type="checkbox" name="comorbidade" value="Hipotireoidismo"> Hipotireoidismo</label>
+                            <label><input type="checkbox" name="comorbidade" value="Depressão"> Depressão</label>
+                            <label><input type="checkbox" name="comorbidade" value="Ansiedade"> Ansiedade</label>
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="novasComorbidades">Novas Comorbidades ou Mudanças no Quadro Clínico</label>
@@ -329,6 +394,11 @@
                     <div class="form-group">
                         <label for="pele">Exame da Pele</label>
                         <textarea id="pele" name="pele" rows="3" placeholder="Acantose nigricans, lipodistrofia, cicatrizes, xantomas, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exameTireoide">Exame da Tireoide</label>
+                        <textarea id="exameTireoide" name="exameTireoide" rows="3" placeholder="Tamanho, consistência, presença de nódulos, bócio, dor à palpação"></textarea>
                     </div>
                 </div>
 
