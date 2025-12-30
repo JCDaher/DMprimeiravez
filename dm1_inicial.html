@@ -300,31 +300,107 @@
                     <h4>2.3 Comorbidades e Antecedentes</h4>
 
                     <div class="form-group">
-                        <label>Comorbidades</label>
+                        <label>Comorbidades Gerais</label>
                         <div class="checkbox-group">
                             <label><input type="checkbox" name="comorbidade" value="Hipertensão"> Hipertensão Arterial</label>
                             <label><input type="checkbox" name="comorbidade" value="Dislipidemia"> Dislipidemia</label>
                             <label><input type="checkbox" name="comorbidade" value="Doença Cardiovascular"> Doença Cardiovascular</label>
                             <label><input type="checkbox" name="comorbidade" value="AVC"> AVC Prévio</label>
                             <label><input type="checkbox" name="comorbidade" value="Doença Renal"> Doença Renal</label>
-                            <label><input type="checkbox" name="comorbidade" value="Hipotireoidismo"> Hipotireoidismo</label>
-                            <label><input type="checkbox" name="comorbidade" value="Hipertireoidismo"> Hipertireoidismo</label>
-                            <label><input type="checkbox" name="comorbidade" value="Doença Celíaca"> Doença Celíaca</label>
-                            <label><input type="checkbox" name="comorbidade" value="Doença de Addison"> Doença de Addison</label>
-                            <label><input type="checkbox" name="comorbidade" value="Vitiligo"> Vitiligo</label>
                             <label><input type="checkbox" name="comorbidade" value="Depressão"> Depressão</label>
                             <label><input type="checkbox" name="comorbidade" value="Ansiedade"> Ansiedade</label>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="outrasComorbidades">Outras Comorbidades (incluindo outras doenças autoimunes)</label>
-                        <textarea id="outrasComorbidades" name="outrasComorbidades" rows="3" placeholder="Outras doenças autoimunes, gastrintestinais, etc."></textarea>
+                        <label><strong>Screening de Doenças Autoimunes</strong></label>
+                        <p style="font-size: 0.9em; color: #666; margin-top: 5px;">Pacientes com DM1 têm maior risco de outras doenças autoimunes</p>
                     </div>
 
                     <div class="form-group">
-                        <label for="screeningAutoimune">Screening para Doenças Autoimunes</label>
-                        <textarea id="screeningAutoimune" name="screeningAutoimune" rows="3" placeholder="Anti-TPO, Anti-Tg (tireoide), Anti-transglutaminase (celíaca), último rastreamento"></textarea>
+                        <label>Tireoidite de Hashimoto / Hipotireoidismo Autoimune</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="tireoideAutoimune" value="Sim"> Sim</label>
+                            <label><input type="radio" name="tireoideAutoimune" value="Não"> Não</label>
+                            <label><input type="radio" name="tireoideAutoimune" value="Não investigado"> Não investigado</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Doença de Graves / Hipertireoidismo Autoimune</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="gravesAutoimune" value="Sim"> Sim</label>
+                            <label><input type="radio" name="gravesAutoimune" value="Não"> Não</label>
+                            <label><input type="radio" name="gravesAutoimune" value="Não investigado"> Não investigado</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Doença Celíaca</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="celiacaAutoimune" value="Sim"> Sim</label>
+                            <label><input type="radio" name="celiacaAutoimune" value="Não"> Não</label>
+                            <label><input type="radio" name="celiacaAutoimune" value="Não investigado"> Não investigado</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Doença de Addison / Insuficiência Adrenal Autoimune</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="addisonAutoimune" value="Sim"> Sim</label>
+                            <label><input type="radio" name="addisonAutoimune" value="Não"> Não</label>
+                            <label><input type="radio" name="addisonAutoimune" value="Não investigado"> Não investigado</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Vitiligo</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="vitiligoAutoimune" value="Sim"> Sim</label>
+                            <label><input type="radio" name="vitiligoAutoimune" value="Não"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Anemia Perniciosa / Deficiência de B12 Autoimune</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="anemiaPerniciosaAutoimune" value="Sim"> Sim</label>
+                            <label><input type="radio" name="anemiaPerniciosaAutoimune" value="Não"> Não</label>
+                            <label><input type="radio" name="anemiaPerniciosaAutoimune" value="Não investigado"> Não investigado</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Artrite Reumatoide</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="artriteAutoimune" value="Sim"> Sim</label>
+                            <label><input type="radio" name="artriteAutoimune" value="Não"> Não</label>
+                            <label><input type="radio" name="artriteAutoimune" value="Não investigado"> Não investigado</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Lúpus Eritematoso Sistêmico</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="lupusAutoimune" value="Sim"> Sim</label>
+                            <label><input type="radio" name="lupusAutoimune" value="Não"> Não</label>
+                            <label><input type="radio" name="lupusAutoimune" value="Não investigado"> Não investigado</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="outrasDoencasAutoimunes">Outras Doenças Autoimunes</label>
+                        <textarea id="outrasDoencasAutoimunes" name="outrasDoencasAutoimunes" rows="2" placeholder="Psoríase, esclerose múltipla, miastenia gravis, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resultadosScreening">Resultados de Exames de Screening Autoimune</label>
+                        <textarea id="resultadosScreening" name="resultadosScreening" rows="3" placeholder="Anti-TPO, Anti-Tg, Anti-transglutaminase, TSH, T4L, Anti-GAD, últimas datas de rastreamento"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="outrasComorbidades">Outras Comorbidades</label>
+                        <textarea id="outrasComorbidades" name="outrasComorbidades" rows="2"></textarea>
                     </div>
 
                     <div class="form-group">
@@ -359,6 +435,20 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Doenças Autoimunes em Familiares?</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="familiarAutoimune" value="Tireoidite/Hipo"> Tireoidite/Hipotireoidismo</label>
+                            <label><input type="checkbox" name="familiarAutoimune" value="Hipertireoidismo"> Hipertireoidismo/Graves</label>
+                            <label><input type="checkbox" name="familiarAutoimune" value="Celíaca"> Doença Celíaca</label>
+                            <label><input type="checkbox" name="familiarAutoimune" value="Addison"> Doença de Addison</label>
+                            <label><input type="checkbox" name="familiarAutoimune" value="Vitiligo"> Vitiligo</label>
+                            <label><input type="checkbox" name="familiarAutoimune" value="Artrite"> Artrite Reumatoide</label>
+                            <label><input type="checkbox" name="familiarAutoimune" value="Lúpus"> Lúpus</label>
+                            <label><input type="checkbox" name="familiarAutoimune" value="Psoríase"> Psoríase</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label>Outras Doenças em Familiares</label>
                         <div class="checkbox-group">
                             <label><input type="checkbox" name="familiarOutras" value="Hipertensão"> Hipertensão</label>
@@ -372,7 +462,7 @@
 
                     <div class="form-group">
                         <label for="detalhesHistoricoFamiliar">Detalhes do Histórico Familiar</label>
-                        <textarea id="detalhesHistoricoFamiliar" name="detalhesHistoricoFamiliar" rows="3" placeholder="Detalhe idade de diagnóstico, complicações, etc."></textarea>
+                        <textarea id="detalhesHistoricoFamiliar" name="detalhesHistoricoFamiliar" rows="3" placeholder="Especifique qual familiar, idade de diagnóstico, complicações, etc."></textarea>
                     </div>
                 </div>
 
@@ -637,7 +727,12 @@
 
                     <div class="form-group">
                         <label for="pele">Exame da Pele</label>
-                        <textarea id="pele" name="pele" rows="3" placeholder="Acantose nigricans, lipodistrofia, cicatrizes, xantomas, etc."></textarea>
+                        <textarea id="pele" name="pele" rows="3" placeholder="Acantose nigricans, lipodistrofia, cicatrizes, xantomas, vitiligo, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exameTireoide">Exame da Tireoide</label>
+                        <textarea id="exameTireoide" name="exameTireoide" rows="3" placeholder="Tamanho, consistência, presença de nódulos, bócio, dor à palpação, sopros"></textarea>
                     </div>
                 </div>
 
