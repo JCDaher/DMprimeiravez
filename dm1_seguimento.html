@@ -79,25 +79,52 @@
                 </div>
 
                 <div class="subsection">
-                    <h4>2.2 Adesão ao Tratamento</h4>
+                    <h4>2.2 Esquema de Insulina e Tratamento</h4>
 
                     <div class="form-group">
-                        <label for="medicamentosAtuais">Medicamentos em Uso (nome, dose, frequência)</label>
-                        <textarea id="medicamentosAtuais" name="medicamentosAtuais" rows="5" placeholder="Liste todos os medicamentos que o paciente está tomando"></textarea>
+                        <label for="esquemaInsulina">Esquema de Insulina Atual</label>
+                        <textarea id="esquemaInsulina" name="esquemaInsulina" rows="6" placeholder="Detalhe:
+- Insulina basal: tipo, dose, horário
+- Insulina bolus/prandial: tipo, doses por refeição
+- Dose total diária (DTD)
+- Mudanças desde a última consulta"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Adesão aos Medicamentos</label>
+                        <label>Adesão ao Esquema de Insulina</label>
                         <div class="radio-group">
-                            <label><input type="radio" name="adesaoMed" value="Boa"> Boa (toma regularmente)</label>
-                            <label><input type="radio" name="adesaoMed" value="Parcial"> Parcial (esquece às vezes)</label>
-                            <label><input type="radio" name="adesaoMed" value="Ruim"> Ruim (frequentemente esquece)</label>
+                            <label><input type="radio" name="adesaoInsulina" value="Boa"> Boa (aplica regularmente)</label>
+                            <label><input type="radio" name="adesaoInsulina" value="Parcial"> Parcial (esquece às vezes)</label>
+                            <label><input type="radio" name="adesaoInsulina" value="Ruim"> Ruim (frequentemente esquece)</label>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="motivosNaoAdesao">Motivos de Não-Adesão ou Dificuldades</label>
-                        <textarea id="motivosNaoAdesao" name="motivosNaoAdesao" rows="3" placeholder="Efeitos colaterais, esquecimento, custo, falta de acesso, etc."></textarea>
+                        <label for="dificuldadesInsulina">Dificuldades com a Insulina</label>
+                        <textarea id="dificuldadesInsulina" name="dificuldadesInsulina" rows="3" placeholder="Esquecimento, dor nas aplicações, lipodistrofia, rotação de locais, custo, acesso, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Utiliza outros medicamentos além da insulina?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="outrosMedicamentosDM" value="Sim" onclick="document.getElementById('campoMedicamentosAtuais').style.display='block'"> Sim</label>
+                            <label><input type="radio" name="outrosMedicamentosDM" value="Não" onclick="document.getElementById('campoMedicamentosAtuais').style.display='none'"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="campoMedicamentosAtuais" style="display:none;">
+                        <label for="medicamentosAtuais">Outros Medicamentos (nome, dose, frequência)</label>
+                        <textarea id="medicamentosAtuais" name="medicamentosAtuais" rows="4" placeholder="Liste medicamentos além da insulina: metformina, GLP-1, SGLT2, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Adesão aos Outros Medicamentos</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="adesaoMed" value="Boa"> Boa (toma regularmente)</label>
+                            <label><input type="radio" name="adesaoMed" value="Parcial"> Parcial (esquece às vezes)</label>
+                            <label><input type="radio" name="adesaoMed" value="Ruim"> Ruim (frequentemente esquece)</label>
+                            <label><input type="radio" name="adesaoMed" value="N/A"> Não se aplica</label>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -174,6 +201,43 @@
                         <div class="radio-group">
                             <label><input type="radio" name="hiperglicemia" value="Sim"> Sim</label>
                             <label><input type="radio" name="hiperglicemia" value="Não"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Realiza Contagem de Carboidratos?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="contagemCHO" value="Sim" onclick="document.getElementById('camposFatores').style.display='block'"> Sim</label>
+                            <label><input type="radio" name="contagemCHO" value="Não" onclick="document.getElementById('camposFatores').style.display='none'"> Não</label>
+                            <label><input type="radio" name="contagemCHO" value="Às vezes" onclick="document.getElementById('camposFatores').style.display='block'"> Às vezes</label>
+                        </div>
+                    </div>
+
+                    <div id="camposFatores" style="display:none;">
+                        <div class="form-group">
+                            <label><strong>Fator de Sensibilidade (FS)</strong></label>
+                            <p style="font-size: 0.9em; color: #666; margin-top: 5px;">Quanto 1U de insulina reduz a glicemia (em mg/dL)</p>
+                            <input type="text" id="fatorSensibilidade" name="fatorSensibilidade" placeholder="Ex: 50 mg/dL">
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Relação Insulina:Carboidrato (I:CHO) - Café da Manhã</label>
+                            <input type="text" id="ichoCafe" name="ichoCafe" placeholder="Ex: 1U para 10g de CHO">
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Relação Insulina:Carboidrato (I:CHO) - Almoço</label>
+                            <input type="text" id="ichoAlmoco" name="ichoAlmoco" placeholder="Ex: 1U para 15g de CHO">
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Relação Insulina:Carboidrato (I:CHO) - Jantar</label>
+                            <input type="text" id="ichoJantar" name="ichoJantar" placeholder="Ex: 1U para 12g de CHO">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="observacoesFatores">Observações sobre Fatores de Correção</label>
+                            <textarea id="observacoesFatores" name="observacoesFatores" rows="2" placeholder="Variações, ajustes necessários, dificuldades"></textarea>
                         </div>
                     </div>
                 </div>
@@ -328,7 +392,12 @@
 
                     <div class="form-group">
                         <label for="pele">Exame da Pele</label>
-                        <textarea id="pele" name="pele" rows="3" placeholder="Acantose nigricans, lipodistrofia, cicatrizes, xantomas, etc."></textarea>
+                        <textarea id="pele" name="pele" rows="3" placeholder="Acantose nigricans, lipodistrofia, cicatrizes, xantomas, vitiligo, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exameTireoide">Exame da Tireoide</label>
+                        <textarea id="exameTireoide" name="exameTireoide" rows="3" placeholder="Tamanho, consistência, presença de nódulos, bócio, dor à palpação, sopros"></textarea>
                     </div>
                 </div>
 
