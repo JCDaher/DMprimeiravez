@@ -153,23 +153,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Tratamentos Prévios e Atuais</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="tratamento" value="Dieta"> Dieta</label>
-                            <label><input type="checkbox" name="tratamento" value="Exercício"> Exercício Físico</label>
-                            <label><input type="checkbox" name="tratamento" value="Antidiabéticos Orais"> Antidiabéticos Orais</label>
-                            <label><input type="checkbox" name="tratamento" value="Insulina"> Insulina</label>
-                            <label><input type="checkbox" name="tratamento" value="GLP-1"> Agonistas GLP-1</label>
-                            <label><input type="checkbox" name="tratamento" value="Outros"> Outros</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="medicamentosAtuais">Medicamentos Atuais (nome, dose, frequência)</label>
-                        <textarea id="medicamentosAtuais" name="medicamentosAtuais" rows="5" placeholder="Liste todos os medicamentos em uso com suas respectivas doses e frequências"></textarea>
-                    </div>
-
-                    <div class="form-group">
                         <label for="esquemaInsulina">Esquema de Insulina Atual</label>
                         <textarea id="esquemaInsulina" name="esquemaInsulina" rows="6" placeholder="Detalhe:
 - Insulina basal: tipo, dose, horário
@@ -177,6 +160,19 @@
 - Fator de sensibilidade (1U reduz quantos mg/dL)
 - Relação insulina:carboidrato (1U para quantos gramas de CHO)
 - Dose total diária"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Utiliza outros medicamentos além da insulina?</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="outrosMedicamentosDM" value="Sim" onclick="document.getElementById('campoMedicamentosAtuais').style.display='block'"> Sim</label>
+                            <label><input type="radio" name="outrosMedicamentosDM" value="Não" onclick="document.getElementById('campoMedicamentosAtuais').style.display='none'"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="campoMedicamentosAtuais" style="display:none;">
+                        <label for="medicamentosAtuais">Outros Medicamentos (nome, dose, frequência)</label>
+                        <textarea id="medicamentosAtuais" name="medicamentosAtuais" rows="4" placeholder="Liste medicamentos além da insulina: metformina, GLP-1, SGLT2, etc."></textarea>
                     </div>
 
                     <div class="form-group">
