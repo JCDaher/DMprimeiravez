@@ -271,7 +271,25 @@
                             <label><input type="checkbox" name="sintomasNeuro" value="Formigamento"> Formigamento</label>
                             <label><input type="checkbox" name="sintomasNeuro" value="Dormência"> Dormência</label>
                             <label><input type="checkbox" name="sintomasNeuro" value="Dor neuropática"> Dor neuropática</label>
+                            <label><input type="checkbox" name="sintomasNeuro" value="Queimação"> Queimação/sensação de queimor</label>
+                            <label><input type="checkbox" name="sintomasNeuro" value="Alodínia"> Alodínia (dor ao toque leve)</label>
+                            <label><input type="checkbox" name="sintomasNeuro" value="Perda sensibilidade"> Perda de sensibilidade</label>
                             <label><input type="checkbox" name="sintomasNeuro" value="Nenhum"> Nenhum</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Se houver dor neuropática, classifique a intensidade (Escala EVA 0-10)</label>
+                        <p style="font-size: 0.9em; color: #666; margin-top: 5px;">0 = Sem dor | 10 = Pior dor imaginável</p>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="evaDor">Intensidade da Dor (0-10)</label>
+                                <input type="number" id="evaDor" name="evaDor" min="0" max="10" placeholder="0-10">
+                            </div>
+                            <div class="form-group">
+                                <label for="caracteristicaDor">Característica da Dor</label>
+                                <input type="text" id="caracteristicaDor" name="caracteristicaDor" placeholder="Ex: queimação, pontada, choque, latejante">
+                            </div>
                         </div>
                     </div>
 
