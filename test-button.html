@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de Botão</title>
+</head>
+<body>
+    <h1>Teste de Botão - Diagnóstico</h1>
+
+    <p>Data/Hora do arquivo: 2026-01-14 19:50 UTC</p>
+
+    <div id="exportButtons">
+        <button type="button" onclick="gerarProntuario(event)" style="background-color: #2196F3; padding: 10px 20px; color: white; border: none; cursor: pointer;">📄 Gerar Prontuário (com type=button)</button>
+        <br><br>
+        <button onclick="testarSemType(event)" style="background-color: #FF9800; padding: 10px 20px; color: white; border: none; cursor: pointer;">🔴 Teste SEM type=button (vai recarregar)</button>
+    </div>
+
+    <div id="resultado" style="margin-top: 20px; padding: 20px; background: #f0f0f0; display: none;">
+        <h2>✅ FUNCIONOU!</h2>
+        <p>Se você está vendo esta mensagem, o botão funcionou corretamente e NÃO recarregou a página.</p>
+        <p>O problema no dm1_seguimento.html pode ser:</p>
+        <ul>
+            <li>Cache do navegador ou CloudFlare</li>
+            <li>Erro JavaScript antes da função ser definida</li>
+            <li>CloudFlare não deployou a versão mais recente</li>
+        </ul>
+    </div>
+
+    <script>
+        function gerarProntuario(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
+            console.log('gerarProntuario foi chamado!');
+            console.log('Event:', event);
+
+            document.getElementById('resultado').style.display = 'block';
+            alert('✅ Botão funcionou! A página NÃO recarregou.');
+        }
+
+        function testarSemType(event) {
+            alert('⚠️ Este botão VAI recarregar a página porque não tem type="button"');
+        }
+
+        console.log('Script carregado com sucesso!');
+        console.log('Versão: 2026-01-14 19:50');
+    </script>
+</body>
+</html>
