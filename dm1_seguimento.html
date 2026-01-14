@@ -162,8 +162,8 @@
 
         <h2>Registros</h2>
         <div id="exportButtons" style="display: none; margin-bottom: 15px;">
-            <button type="button" onclick="gerarProntuario(event)" style="background-color: #2196F3;">📄 Gerar Prontuário</button>
-            <button type="button" onclick="exportarCSV(event)" style="background-color: #FF9800;">📊 Exportar CSV</button>
+            <button type="button" id="btnGerarProntuario" style="background-color: #2196F3; padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;">📄 Gerar Prontuário</button>
+            <button type="button" id="btnExportarCSV" style="background-color: #FF9800; padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;">📊 Exportar CSV</button>
         </div>
         <table id="registrosTable">
             <thead>
@@ -523,6 +523,26 @@ Dr. Jorge Cecílio - Especialista em Diabetes
             document.getElementById('patientForm').addEventListener('submit', salvarDadosPaciente);
             document.getElementById('diabetesForm').addEventListener('submit', salvarRegistro);
             document.getElementById('patientSelect').addEventListener('change', selecionarPaciente);
+
+            // Event listeners para os botões de export (super defensivo contra form submission)
+            document.getElementById('btnGerarProntuario').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                console.log('Botão Gerar Prontuário clicado');
+                gerarProntuario(e);
+                return false;
+            });
+
+            document.getElementById('btnExportarCSV').addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                console.log('Botão Exportar CSV clicado');
+                exportarCSV(e);
+                return false;
+            });
+
             atualizarTabelaPacientes();
             atualizarSeletorPacientes();
         });
