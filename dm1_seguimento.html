@@ -162,8 +162,8 @@
 
         <h2>Registros</h2>
         <div id="exportButtons" style="display: none; margin-bottom: 15px;">
-            <button onclick="gerarProntuario()" style="background-color: #2196F3;">📄 Gerar Prontuário</button>
-            <button onclick="exportarCSV()" style="background-color: #FF9800;">📊 Exportar CSV</button>
+            <button type="button" onclick="gerarProntuario(event)" style="background-color: #2196F3;">📄 Gerar Prontuário</button>
+            <button type="button" onclick="exportarCSV(event)" style="background-color: #FF9800;">📊 Exportar CSV</button>
         </div>
         <table id="registrosTable">
             <thead>
@@ -185,12 +185,12 @@
             <div style="background: white; margin: 50px auto; padding: 30px; max-width: 900px; max-height: 80vh; overflow-y: auto; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h2 style="margin: 0;">Prontuário do Paciente</h2>
-                    <button onclick="fecharProntuario()" style="background-color: #f44336;">✖ Fechar</button>
+                    <button type="button" onclick="fecharProntuario()" style="background-color: #f44336;">✖ Fechar</button>
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <button onclick="copiarProntuario()" style="background-color: #4CAF50;">📋 Copiar</button>
-                    <button onclick="baixarProntuario()" style="background-color: #2196F3;">⬇️ Baixar TXT</button>
-                    <button onclick="imprimirProntuario()" style="background-color: #9C27B0;">🖨️ Imprimir</button>
+                    <button type="button" onclick="copiarProntuario()" style="background-color: #4CAF50;">📋 Copiar</button>
+                    <button type="button" onclick="baixarProntuario()" style="background-color: #2196F3;">⬇️ Baixar TXT</button>
+                    <button type="button" onclick="imprimirProntuario()" style="background-color: #9C27B0;">🖨️ Imprimir</button>
                 </div>
                 <pre id="prontuarioConteudo" style="background: #f5f5f5; padding: 20px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.5;"></pre>
             </div>
@@ -322,7 +322,12 @@
             }, 3000);
         }
 
-        function gerarProntuario() {
+        function gerarProntuario(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
             if (!currentPatient) {
                 alert('Por favor, selecione um paciente primeiro.');
                 return;
@@ -474,7 +479,12 @@ Dr. Jorge Cecílio - Especialista em Diabetes
             printWindow.print();
         }
 
-        function exportarCSV() {
+        function exportarCSV(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+
             if (!currentPatient) {
                 alert('Por favor, selecione um paciente primeiro.');
                 return;
