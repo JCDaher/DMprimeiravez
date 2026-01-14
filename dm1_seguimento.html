@@ -3,522 +3,566 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciamento de Diabetes Tipo 1 - Múltiplos Pacientes</title>
-    <!-- Build: 2026-01-14T20:20:00Z | Fix: Button reload issue | Version: FINAL -->
+    <title>Consulta de Seguimento DM1 | Dr. Jorge Cecílio</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
         .container {
-            max-width: 800px;
-            margin: auto;
+            max-width: 1200px;
+            margin: 0 auto;
             background: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
         }
-        h1, h2, h3 {
-            color: #333;
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
         }
+
+        header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        header h2 {
+            font-size: 1.2em;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h3 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
         }
-        input[type="text"], input[type="number"], input[type="date"], input[type="month"], select, textarea {
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        input[type="tel"],
+        select,
+        textarea {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
         }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .checkbox-group label,
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+        }
+
+        .checkbox-group input,
+        .radio-group input {
+            margin-right: 5px;
+            width: auto;
+        }
+
         button {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 10px 15px;
+            padding: 15px 40px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 1.1em;
             cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
+
         button:hover {
-            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+
+        button:active {
+            transform: translateY(0);
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
         }
-        th {
-            background-color: #f2f2f2;
+
+        .resultado {
+            display: none;
+            padding: 30px;
+            background: #f9f9f9;
+            margin-top: 30px;
+            border-radius: 8px;
         }
-        .message {
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
+
+        .prontuario-gerado {
+            background: white;
+            padding: 30px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+            border: 2px solid #e0e0e0;
         }
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
-        #patientList, #patientSelector {
-            margin-top: 20px;
+
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .button-group {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Gerenciamento de Diabetes Tipo 1</h1>
-        
-        <h2>Dados do Paciente</h2>
-        <form id="patientForm">
-            <div class="form-group">
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" required>
-            </div>
-            <div class="form-group">
-                <label for="sexo">Sexo:</label>
-                <select id="sexo" required>
-                    <option value="">Selecione</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Feminino">Feminino</option>
-                    <option value="Outro">Outro</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="dataNascimento">Data de Nascimento:</label>
-                <input type="date" id="dataNascimento" required>
-            </div>
-            <div class="form-group">
-                <label for="dataDiagnostico">Mês e Ano de Diagnóstico:</label>
-                <input type="month" id="dataDiagnostico" required>
-            </div>
-            <button type="submit">Salvar Dados do Paciente</button>
-        </form>
-        <div id="patientMessage" class="message" style="display: none;"></div>
+        <header>
+            <h1>Consulta de Seguimento</h1>
+            <h2>Diabetes Mellitus Tipo 1 - Dr. Jorge Cecílio</h2>
+        </header>
 
-        <div id="patientList">
-            <h2>Pacientes Registrados</h2>
-            <table id="patientsTable">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Sexo</th>
-                        <th>Data de Nascimento</th>
-                        <th>Data de Diagnóstico</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Os pacientes serão inseridos aqui -->
-                </tbody>
-            </table>
-        </div>
+        <div class="form-container">
+            <form id="consultaForm">
+                <!-- Seção 1: Identificação -->
+                <div class="section">
+                    <h3>1. Identificação</h3>
+                    
+                    <div class="form-group">
+                        <label for="nome">Nome Completo:</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
 
-        <div id="patientSelector">
-            <h2>Selecionar Paciente</h2>
-            <select id="patientSelect">
-                <option value="">Selecione um paciente</option>
-            </select>
-        </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dataNascimento">Data de Nascimento:</label>
+                            <input type="date" id="dataNascimento" name="dataNascimento" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="idade">Idade:</label>
+                            <input type="number" id="idade" name="idade" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="sexo">Sexo:</label>
+                            <select id="sexo" name="sexo">
+                                <option value="">Selecione</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                            </select>
+                        </div>
+                    </div>
 
-        <div id="currentPatientInfo" style="display: none;">
-            <h3>Paciente Atual: <span id="currentPatientName"></span></h3>
-        </div>
-
-        <h2>Novo Registro</h2>
-        <form id="diabetesForm" style="display: none;">
-            <div class="form-group">
-                <label for="data">Data:</label>
-                <input type="date" id="data" required>
-            </div>
-            <div class="form-group">
-                <label for="hba1c">HbA1c (%):</label>
-                <input type="number" id="hba1c" step="0.1" required>
-            </div>
-            <div class="form-group">
-                <label for="insulinaBasal">Dose de Insulina Basal (unidades):</label>
-                <input type="number" id="insulinaBasal" step="0.1">
-            </div>
-            <div class="form-group">
-                <label for="insulinaRapida">Dose de Insulina de Ação Rápida (unidades):</label>
-                <input type="number" id="insulinaRapida" step="0.1">
-            </div>
-            <div class="form-group">
-                <label for="intercorrencias">Intercorrências Médicas:</label>
-                <textarea id="intercorrencias"></textarea>
-            </div>
-            <button type="submit">Salvar Registro</button>
-        </form>
-        <div id="message" class="message" style="display: none;"></div>
-
-        <h2>Registros</h2>
-        <div id="exportButtons" style="display: none; margin-bottom: 15px;">
-            <button type="button" onclick="window.gerarProntuario(); return false;" style="background-color: #2196F3; padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;">📄 Gerar Prontuário</button>
-            <button type="button" onclick="window.exportarCSV(); return false;" style="background-color: #FF9800; padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;">📊 Exportar CSV</button>
-        </div>
-        <table id="registrosTable">
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>HbA1c</th>
-                    <th>Insulina Basal</th>
-                    <th>Insulina Rápida</th>
-                    <th>Intercorrências</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Os registros serão inseridos aqui -->
-            </tbody>
-        </table>
-
-        <!-- Modal de Prontuário -->
-        <div id="prontuarioModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-            <div style="background: white; margin: 50px auto; padding: 30px; max-width: 900px; max-height: 80vh; overflow-y: auto; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2 style="margin: 0;">Prontuário do Paciente</h2>
-                    <button type="button" onclick="fecharProntuario()" style="background-color: #f44336;">✖ Fechar</button>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="dataUltimaConsulta">Data da Última Consulta:</label>
+                            <input type="date" id="dataUltimaConsulta" name="dataUltimaConsulta">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone:</label>
+                            <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000">
+                        </div>
+                    </div>
                 </div>
-                <div style="margin-bottom: 20px;">
-                    <button type="button" onclick="copiarProntuario()" style="background-color: #4CAF50;">📋 Copiar</button>
-                    <button type="button" onclick="baixarProntuario()" style="background-color: #2196F3;">⬇️ Baixar TXT</button>
-                    <button type="button" onclick="imprimirProntuario()" style="background-color: #9C27B0;">🖨️ Imprimir</button>
+
+                <!-- Seção 2: Evolução desde Última Consulta -->
+                <div class="section">
+                    <h3>2. Evolução desde a Última Consulta</h3>
+
+                    <div class="form-group">
+                        <label for="queixas">Queixas Atuais:</label>
+                        <textarea id="queixas" name="queixas" placeholder="Sintomas ou queixas que o paciente apresenta hoje"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="intercorrencias">Intercorrências desde a Última Consulta:</label>
+                        <textarea id="intercorrencias" name="intercorrencias" placeholder="Internações, emergências, hipoglicemias graves, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="esquemaInsulina">Esquema de Insulina Atual:</label>
+                        <textarea id="esquemaInsulina" name="esquemaInsulina" placeholder="Tipo de insulina, doses, horários"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Adesão ao Tratamento:</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="adesao" value="Boa"> Boa</label>
+                                <label><input type="radio" name="adesao" value="Regular"> Regular</label>
+                                <label><input type="radio" name="adesao" value="Ruim"> Ruim</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="monitoramento">Frequência de Monitoramento Glicêmico:</label>
+                        <input type="text" id="monitoramento" name="monitoramento" placeholder="Ex: 3x ao dia">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hipoglicemias:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="hipoglicemias" value="Sim" onclick="document.getElementById('detalhesHipo').style.display='block'"> Sim</label>
+                            <label><input type="radio" name="hipoglicemias" value="Não" onclick="document.getElementById('detalhesHipo').style.display='none'"> Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="detalhesHipo" style="display:none;">
+                        <label for="frequenciaHipo">Detalhes das Hipoglicemias:</label>
+                        <textarea id="frequenciaHipo" name="frequenciaHipo" placeholder="Frequência, sintomas, horários, gravidade"></textarea>
+                    </div>
                 </div>
-                <pre id="prontuarioConteudo" style="background: #f5f5f5; padding: 20px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.5;"></pre>
+
+                <!-- Seção 3: Exame Físico -->
+                <div class="section">
+                    <h3>3. Exame Físico</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="peso">Peso (kg):</label>
+                            <input type="number" id="peso" name="peso" step="0.1" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="altura">Altura (cm):</label>
+                            <input type="number" id="altura" name="altura" step="0.1" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="imc">IMC:</label>
+                            <input type="number" id="imc" name="imc" step="0.1" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pa">Pressão Arterial (mmHg):</label>
+                            <input type="text" id="pa" name="pa" placeholder="000/00">
+                        </div>
+                        <div class="form-group">
+                            <label for="fc">Frequência Cardíaca (bpm):</label>
+                            <input type="number" id="fc" name="fc" min="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="examePes">Exame dos Pés:</label>
+                        <textarea id="examePes" name="examePes" placeholder="Sensibilidade, pulsos, lesões, deformidades"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="outrosAchados">Outros Achados ao Exame Físico:</label>
+                        <textarea id="outrosAchados" name="outrosAchados"></textarea>
+                    </div>
+                </div>
+
+                <!-- Seção 4: Exames e Conduta -->
+                <div class="section">
+                    <h3>4. Exames Laboratoriais e Conduta</h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="hba1c">HbA1c (%):</label>
+                            <input type="number" id="hba1c" name="hba1c" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="dataHba1c">Data do Exame:</label>
+                            <input type="date" id="dataHba1c" name="dataHba1c">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="glicemiaJejum">Glicemia de Jejum (mg/dL):</label>
+                            <input type="number" id="glicemiaJejum" name="glicemiaJejum">
+                        </div>
+                        <div class="form-group">
+                            <label for="creatinina">Creatinina (mg/dL):</label>
+                            <input type="number" id="creatinina" name="creatinina" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="outrosExames">Outros Exames Recentes:</label>
+                        <textarea id="outrosExames" name="outrosExames" placeholder="Lipidograma, função hepática, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="avaliacao">Avaliação e Controle Atual:</label>
+                        <textarea id="avaliacao" name="avaliacao" placeholder="Análise do controle glicêmico e resposta ao tratamento"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ajustes">Ajustes no Tratamento:</label>
+                        <textarea id="ajustes" name="ajustes" placeholder="Mudanças de dose, introdução ou retirada de medicamentos"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="orientacoes">Orientações:</label>
+                        <textarea id="orientacoes" name="orientacoes" placeholder="Dieta, atividade física, automonitoramento, cuidados"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="examesSolicitados">Exames Solicitados:</label>
+                        <textarea id="examesSolicitados" name="examesSolicitados"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="retorno">Retorno:</label>
+                        <input type="text" id="retorno" name="retorno" placeholder="Ex: 3 meses">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit">Gerar Prontuário</button>
+                </div>
+            </form>
+
+            <div id="resultado" class="resultado">
+                <h3>Prontuário Gerado</h3>
+                <div class="button-group">
+                    <button onclick="copiarTexto()">Copiar para Área de Transferência</button>
+                    <button class="btn-secondary" onclick="exportarTexto()">Exportar TXT</button>
+                    <button class="btn-success" onclick="window.print()">Imprimir</button>
+                    <button onclick="novaConsulta()">Nova Consulta</button>
+                </div>
+                <div id="prontuarioGerado" class="prontuario-gerado"></div>
             </div>
         </div>
     </div>
 
     <script>
-        let patients = JSON.parse(localStorage.getItem('patients')) || [];
-        let currentPatient = null;
-        let registros = JSON.parse(localStorage.getItem('registrosDiabetes')) || {};
-
-        function salvarDadosPaciente(evento) {
-            evento.preventDefault();
-            
-            const newPatient = {
-                id: Date.now().toString(),
-                nome: document.getElementById('nome').value,
-                sexo: document.getElementById('sexo').value,
-                dataNascimento: document.getElementById('dataNascimento').value,
-                dataDiagnostico: document.getElementById('dataDiagnostico').value
-            };
-
-            patients.push(newPatient);
-            localStorage.setItem('patients', JSON.stringify(patients));
-            mostrarMensagem('Dados do paciente salvos com sucesso!', 'success', 'patientMessage');
-            document.getElementById('patientForm').reset();
-            atualizarTabelaPacientes();
-            atualizarSeletorPacientes();
-        }
-
-        function atualizarTabelaPacientes() {
-            const tbody = document.querySelector('#patientsTable tbody');
-            tbody.innerHTML = '';
-            
-            patients.forEach(patient => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${patient.nome}</td>
-                    <td>${patient.sexo}</td>
-                    <td>${patient.dataNascimento}</td>
-                    <td>${patient.dataDiagnostico}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function atualizarSeletorPacientes() {
-            const select = document.getElementById('patientSelect');
-            select.innerHTML = '<option value="">Selecione um paciente</option>';
-            patients.forEach(patient => {
-                const option = document.createElement('option');
-                option.value = patient.id;
-                option.textContent = patient.nome;
-                select.appendChild(option);
-            });
-        }
-
-        function selecionarPaciente(evento) {
-            const patientId = evento.target.value;
-            currentPatient = patients.find(p => p.id === patientId);
-            if (currentPatient) {
-                document.getElementById('diabetesForm').style.display = 'block';
-                document.getElementById('currentPatientName').textContent = currentPatient.nome;
-                document.getElementById('currentPatientInfo').style.display = 'block';
-                atualizarTabelaRegistros();
-            } else {
-                document.getElementById('diabetesForm').style.display = 'none';
-                document.getElementById('currentPatientInfo').style.display = 'none';
-            }
-        }
-
-        function salvarRegistro(evento) {
-            evento.preventDefault();
-            
-            if (!currentPatient) {
-                alert('Por favor, selecione um paciente primeiro.');
-                return;
-            }
-
-            const novoRegistro = {
-                data: document.getElementById('data').value,
-                hba1c: document.getElementById('hba1c').value,
-                insulinaBasal: document.getElementById('insulinaBasal').value,
-                insulinaRapida: document.getElementById('insulinaRapida').value,
-                intercorrencias: document.getElementById('intercorrencias').value
-            };
-
-            if (!registros[currentPatient.id]) {
-                registros[currentPatient.id] = [];
-            }
-            registros[currentPatient.id].push(novoRegistro);
-            localStorage.setItem('registrosDiabetes', JSON.stringify(registros));
-            
-            atualizarTabelaRegistros();
-            document.getElementById('diabetesForm').reset();
-            
-            mostrarMensagem('Registro salvo com sucesso!', 'success', 'message');
-        }
-
-        function atualizarTabelaRegistros() {
-            const tbody = document.querySelector('#registrosTable tbody');
-            tbody.innerHTML = '';
-
-            if (currentPatient && registros[currentPatient.id] && registros[currentPatient.id].length > 0) {
-                document.getElementById('exportButtons').style.display = 'block';
-                registros[currentPatient.id].forEach(registro => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${registro.data}</td>
-                        <td>${registro.hba1c}</td>
-                        <td>${registro.insulinaBasal || '-'}</td>
-                        <td>${registro.insulinaRapida || '-'}</td>
-                        <td>${registro.intercorrencias || '-'}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            } else {
-                document.getElementById('exportButtons').style.display = 'none';
-            }
-        }
-
-        function mostrarMensagem(texto, tipo, elementId) {
-            const messageElement = document.getElementById(elementId);
-            messageElement.textContent = texto;
-            messageElement.className = `message ${tipo}`;
-            messageElement.style.display = 'block';
-            setTimeout(() => {
-                messageElement.style.display = 'none';
-            }, 3000);
-        }
-
-        window.gerarProntuario = function() {
-            if (!currentPatient) {
-                alert('Por favor, selecione um paciente primeiro.');
-                return;
-            }
-
-            const pacienteRegistros = registros[currentPatient.id] || [];
-
-            if (pacienteRegistros.length === 0) {
-                alert('Este paciente não possui registros.');
-                return;
-            }
-
-            // Calcular idade
-            const dataNasc = new Date(currentPatient.dataNascimento);
+        // Calcular idade automaticamente
+        document.getElementById('dataNascimento').addEventListener('change', function() {
+            const dataNasc = new Date(this.value);
             const hoje = new Date();
             let idade = hoje.getFullYear() - dataNasc.getFullYear();
             const mes = hoje.getMonth() - dataNasc.getMonth();
             if (mes < 0 || (mes === 0 && hoje.getDate() < dataNasc.getDate())) {
                 idade--;
             }
+            document.getElementById('idade').value = idade;
+        });
 
-            // Calcular estatísticas
-            const hba1cs = pacienteRegistros.map(r => parseFloat(r.hba1c)).filter(v => !isNaN(v));
-            const mediaHba1c = hba1cs.length > 0 ? (hba1cs.reduce((a, b) => a + b, 0) / hba1cs.length).toFixed(1) : '-';
-            const minHba1c = hba1cs.length > 0 ? Math.min(...hba1cs).toFixed(1) : '-';
-            const maxHba1c = hba1cs.length > 0 ? Math.max(...hba1cs).toFixed(1) : '-';
+        // Calcular IMC automaticamente
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value) / 100;
+            if (peso && altura) {
+                const imc = (peso / (altura * altura)).toFixed(1);
+                document.getElementById('imc').value = imc;
+            }
+        }
+        document.getElementById('peso').addEventListener('input', calcularIMC);
+        document.getElementById('altura').addEventListener('input', calcularIMC);
 
-            // Ordenar registros por data (mais recente primeiro)
-            const registrosOrdenados = [...pacienteRegistros].sort((a, b) => new Date(b.data) - new Date(a.data));
-
-            let prontuario = `
-╔════════════════════════════════════════════════════════════════════╗
-║         PRONTUÁRIO DE ACOMPANHAMENTO - DIABETES TIPO 1            ║
-║                  Dr. Jorge Cecílio                                ║
-╚════════════════════════════════════════════════════════════════════╝
-
-Data de Geração: ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}
-
-═══════════════════════════════════════════════════════════════════════
-DADOS DO PACIENTE
-═══════════════════════════════════════════════════════════════════════
-
-Nome: ${currentPatient.nome}
-Sexo: ${currentPatient.sexo}
-Data de Nascimento: ${new Date(currentPatient.dataNascimento).toLocaleDateString('pt-BR')}
-Idade: ${idade} anos
-Data de Diagnóstico: ${currentPatient.dataDiagnostico}
-
-═══════════════════════════════════════════════════════════════════════
-RESUMO DO ACOMPANHAMENTO
-═══════════════════════════════════════════════════════════════════════
-
-Total de Consultas: ${pacienteRegistros.length}
-Período: ${new Date(registrosOrdenados[registrosOrdenados.length - 1].data).toLocaleDateString('pt-BR')} a ${new Date(registrosOrdenados[0].data).toLocaleDateString('pt-BR')}
-
-Controle Glicêmico (HbA1c):
-  • Média: ${mediaHba1c}%
-  • Mínimo: ${minHba1c}%
-  • Máximo: ${maxHba1c}%
-  • Último valor: ${registrosOrdenados[0].hba1c}% (${new Date(registrosOrdenados[0].data).toLocaleDateString('pt-BR')})
-
-═══════════════════════════════════════════════════════════════════════
-HISTÓRICO DE CONSULTAS
-═══════════════════════════════════════════════════════════════════════
-`;
-
-            registrosOrdenados.forEach((registro, index) => {
-                prontuario += `
-─────────────────────────────────────────────────────────────────────
-Consulta #${registrosOrdenados.length - index} - ${new Date(registro.data).toLocaleDateString('pt-BR')}
-─────────────────────────────────────────────────────────────────────
-
-HbA1c: ${registro.hba1c}%
-Insulina Basal: ${registro.insulinaBasal || 'Não informado'} unidades
-Insulina de Ação Rápida: ${registro.insulinaRapida || 'Não informado'} unidades
-
-Intercorrências:
-${registro.intercorrencias || 'Nenhuma intercorrência relatada'}
-
-`;
+        // Gerar prontuário
+        document.getElementById('consultaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
             });
 
-            prontuario += `
+            const prontuario = `
+╔════════════════════════════════════════════════════════════════════╗
+║         PRONTUÁRIO DE CONSULTA DE SEGUIMENTO - DM TIPO 1          ║
+║                      Dr. Jorge Cecílio                             ║
+╚════════════════════════════════════════════════════════════════════╝
+
+Data da Consulta: ${new Date().toLocaleDateString('pt-BR')}
+
+═══════════════════════════════════════════════════════════════════════
+IDENTIFICAÇÃO
+═══════════════════════════════════════════════════════════════════════
+
+Nome: ${data.nome || ''}
+Data de Nascimento: ${data.dataNascimento ? new Date(data.dataNascimento).toLocaleDateString('pt-BR') : ''}
+Idade: ${data.idade || ''} anos
+Sexo: ${data.sexo || ''}
+Telefone: ${data.telefone || ''}
+Data da Última Consulta: ${data.dataUltimaConsulta ? new Date(data.dataUltimaConsulta).toLocaleDateString('pt-BR') : ''}
+
+═══════════════════════════════════════════════════════════════════════
+EVOLUÇÃO DESDE A ÚLTIMA CONSULTA
+═══════════════════════════════════════════════════════════════════════
+
+Queixas Atuais:
+${data.queixas || 'Nenhuma queixa relatada'}
+
+Intercorrências:
+${data.intercorrencias || 'Sem intercorrências'}
+
+Esquema de Insulina Atual:
+${data.esquemaInsulina || 'Não informado'}
+
+Adesão ao Tratamento: ${data.adesao || 'Não informada'}
+
+Monitoramento Glicêmico: ${data.monitoramento || 'Não informado'}
+
+Hipoglicemias: ${data.hipoglicemias || 'Não informado'}
+${data.frequenciaHipo ? 'Detalhes: ' + data.frequenciaHipo : ''}
+
+═══════════════════════════════════════════════════════════════════════
+EXAME FÍSICO
+═══════════════════════════════════════════════════════════════════════
+
+Peso: ${data.peso || ''} kg
+Altura: ${data.altura || ''} cm
+IMC: ${data.imc || ''}
+
+Pressão Arterial: ${data.pa || ''} mmHg
+Frequência Cardíaca: ${data.fc || ''} bpm
+
+Exame dos Pés:
+${data.examePes || 'Não realizado'}
+
+Outros Achados:
+${data.outrosAchados || 'Sem alterações'}
+
+═══════════════════════════════════════════════════════════════════════
+EXAMES LABORATORIAIS
+═══════════════════════════════════════════════════════════════════════
+
+HbA1c: ${data.hba1c || ''} % (Data: ${data.dataHba1c ? new Date(data.dataHba1c).toLocaleDateString('pt-BR') : ''})
+Glicemia de Jejum: ${data.glicemiaJejum || ''} mg/dL
+Creatinina: ${data.creatinina || ''} mg/dL
+
+Outros Exames:
+${data.outrosExames || 'Não informado'}
+
 ═══════════════════════════════════════════════════════════════════════
 AVALIAÇÃO E CONDUTA
 ═══════════════════════════════════════════════════════════════════════
 
-[Espaço para anotações do médico]
+Avaliação:
+${data.avaliacao || ''}
 
+Ajustes no Tratamento:
+${data.ajustes || 'Manter esquema atual'}
 
+Orientações:
+${data.orientacoes || ''}
 
+Exames Solicitados:
+${data.examesSolicitados || 'Nenhum exame solicitado'}
 
-═══════════════════════════════════════════════════════════════════════
-PRÓXIMA CONSULTA
-═══════════════════════════════════════════════════════════════════════
-
-Data: ___/___/______
-
-Exames a realizar:
-[ ] HbA1c
-[ ] Glicemia de jejum
-[ ] Perfil lipídico
-[ ] Função renal
-[ ] Outros: _______________________
+Retorno: ${data.retorno || ''}
 
 ═══════════════════════════════════════════════════════════════════════
 
-Documento gerado automaticamente pelo Sistema de Gerenciamento de Diabetes
-Dr. Jorge Cecílio - Especialista em Diabetes
-
-═══════════════════════════════════════════════════════════════════════
+_______________________________________________
+Dr. Jorge Cecílio
+Especialista em Diabetes
 `;
 
-            document.getElementById('prontuarioConteudo').textContent = prontuario;
-            document.getElementById('prontuarioModal').style.display = 'block';
-        }
+            document.getElementById('prontuarioGerado').textContent = prontuario;
+            document.getElementById('resultado').style.display = 'block';
+            document.getElementById('resultado').scrollIntoView({ behavior: 'smooth' });
+        });
 
-        function fecharProntuario() {
-            document.getElementById('prontuarioModal').style.display = 'none';
-        }
-
-        function copiarProntuario() {
-            const conteudo = document.getElementById('prontuarioConteudo').textContent;
-            navigator.clipboard.writeText(conteudo).then(() => {
+        function copiarTexto() {
+            const texto = document.getElementById('prontuarioGerado').textContent;
+            navigator.clipboard.writeText(texto).then(() => {
                 alert('Prontuário copiado para a área de transferência!');
             }).catch(err => {
                 alert('Erro ao copiar: ' + err);
             });
         }
 
-        function baixarProntuario() {
-            const conteudo = document.getElementById('prontuarioConteudo').textContent;
-            const blob = new Blob([conteudo], { type: 'text/plain;charset=utf-8' });
+        function exportarTexto() {
+            const texto = document.getElementById('prontuarioGerado').textContent;
+            const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
+            const nome = document.getElementById('nome').value || 'paciente';
+            const data = new Date().toISOString().split('T')[0];
             link.href = URL.createObjectURL(blob);
-            link.download = `Prontuario_${currentPatient.nome.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.txt`;
+            link.download = `prontuario_${nome.replace(/\s+/g, '_')}_${data}.txt`;
             link.click();
         }
 
-        function imprimirProntuario() {
-            const conteudo = document.getElementById('prontuarioConteudo').textContent;
-            const printWindow = window.open('', '', 'height=600,width=800');
-            printWindow.document.write('<html><head><title>Prontuário</title>');
-            printWindow.document.write('<style>body { font-family: "Courier New", monospace; white-space: pre-wrap; padding: 20px; }</style>');
-            printWindow.document.write('</head><body>');
-            printWindow.document.write(conteudo);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
+        function novaConsulta() {
+            if (confirm('Deseja iniciar uma nova consulta? Os dados atuais serão perdidos.')) {
+                document.getElementById('consultaForm').reset();
+                document.getElementById('resultado').style.display = 'none';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
-
-        window.exportarCSV = function() {
-            if (!currentPatient) {
-                alert('Por favor, selecione um paciente primeiro.');
-                return;
-            }
-
-            const pacienteRegistros = registros[currentPatient.id] || [];
-
-            if (pacienteRegistros.length === 0) {
-                alert('Este paciente não possui registros.');
-                return;
-            }
-
-            let csv = 'Data,HbA1c (%),Insulina Basal (U),Insulina Rápida (U),Intercorrências\n';
-
-            pacienteRegistros.forEach(registro => {
-                const intercorrencias = (registro.intercorrencias || '').replace(/"/g, '""').replace(/\n/g, ' ');
-                csv += `${registro.data},${registro.hba1c},${registro.insulinaBasal || ''},${registro.insulinaRapida || ''},"${intercorrencias}"\n`;
-            });
-
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `Registros_${currentPatient.nome.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.csv`;
-            link.click();
-        }
-
-        // Fechar modal ao clicar fora
-        window.onclick = function(event) {
-            const modal = document.getElementById('prontuarioModal');
-            if (event.target === modal) {
-                fecharProntuario();
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('=== DM1 Seguimento - Versão Simplificada ===');
-            document.getElementById('patientForm').addEventListener('submit', salvarDadosPaciente);
-            document.getElementById('diabetesForm').addEventListener('submit', salvarRegistro);
-            document.getElementById('patientSelect').addEventListener('change', selecionarPaciente);
-            atualizarTabelaPacientes();
-            atualizarSeletorPacientes();
-            console.log('=== Pronto! ===');
-        });
     </script>
 </body>
 </html>
