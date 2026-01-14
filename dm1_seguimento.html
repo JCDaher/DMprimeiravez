@@ -163,8 +163,8 @@
 
         <h2>Registros</h2>
         <div id="exportButtons" style="display: none; margin-bottom: 15px;">
-            <button type="button" id="btnGerarProntuario" style="background-color: #2196F3; padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;">📄 Gerar Prontuário</button>
-            <button type="button" id="btnExportarCSV" style="background-color: #FF9800; padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;">📊 Exportar CSV</button>
+            <button type="button" onclick="window.gerarProntuario(); return false;" style="background-color: #2196F3; padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;">📄 Gerar Prontuário</button>
+            <button type="button" onclick="window.exportarCSV(); return false;" style="background-color: #FF9800; padding: 10px 20px; color: white; border: none; border-radius: 5px; cursor: pointer;">📊 Exportar CSV</button>
         </div>
         <table id="registrosTable">
             <thead>
@@ -323,12 +323,7 @@
             }, 3000);
         }
 
-        function gerarProntuario(event) {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-
+        window.gerarProntuario = function() {
             if (!currentPatient) {
                 alert('Por favor, selecione um paciente primeiro.');
                 return;
@@ -480,12 +475,7 @@ Dr. Jorge Cecílio - Especialista em Diabetes
             printWindow.print();
         }
 
-        function exportarCSV(event) {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-
+        window.exportarCSV = function() {
             if (!currentPatient) {
                 alert('Por favor, selecione um paciente primeiro.');
                 return;
@@ -521,51 +511,13 @@ Dr. Jorge Cecílio - Especialista em Diabetes
         };
 
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('=== DM1 Seguimento - Página carregada ===');
-            console.log('Versão: 2026-01-14 20:00 - Fix definitivo');
-
+            console.log('=== DM1 Seguimento - Versão Simplificada ===');
             document.getElementById('patientForm').addEventListener('submit', salvarDadosPaciente);
             document.getElementById('diabetesForm').addEventListener('submit', salvarRegistro);
             document.getElementById('patientSelect').addEventListener('change', selecionarPaciente);
-
-            // Event listeners para os botões de export com verificação
-            const btnGerar = document.getElementById('btnGerarProntuario');
-            const btnCSV = document.getElementById('btnExportarCSV');
-
-            console.log('Botão Gerar encontrado:', btnGerar !== null);
-            console.log('Botão CSV encontrado:', btnCSV !== null);
-
-            if (btnGerar) {
-                btnGerar.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
-                    console.log('✅ Botão Gerar Prontuário clicado!');
-                    gerarProntuario(e);
-                    return false;
-                });
-                console.log('Event listener adicionado ao botão Gerar');
-            } else {
-                console.error('❌ Botão Gerar NÃO encontrado!');
-            }
-
-            if (btnCSV) {
-                btnCSV.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
-                    console.log('✅ Botão Exportar CSV clicado!');
-                    exportarCSV(e);
-                    return false;
-                });
-                console.log('Event listener adicionado ao botão CSV');
-            } else {
-                console.error('❌ Botão CSV NÃO encontrado!');
-            }
-
             atualizarTabelaPacientes();
             atualizarSeletorPacientes();
-            console.log('=== Inicialização completa ===');
+            console.log('=== Pronto! ===');
         });
     </script>
 </body>
