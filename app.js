@@ -190,9 +190,27 @@ function gerarProntuario() {
 
     let prontuario = '';
 
+    // Detectar tipo de consulta baseado no título da página
+    const tituloH1 = document.querySelector('h1').textContent;
+    let tipoConsulta = 'PRIMEIRA CONSULTA';
+    let tipoDiabetes = '';
+
+    if (tituloH1.includes('Tipo 1')) {
+        tipoDiabetes = 'DIABETES MELLITUS TIPO 1';
+    } else if (tituloH1.includes('Tipo 2')) {
+        tipoDiabetes = 'DIABETES MELLITUS TIPO 2';
+    }
+
+    if (tituloH1.includes('Seguimento')) {
+        tipoConsulta = 'CONSULTA DE SEGUIMENTO';
+    } else if (tituloH1.includes('Inicial')) {
+        tipoConsulta = 'CONSULTA INICIAL';
+    }
+
     // Cabeçalho
     prontuario += `╔═══════════════════════════════════════════════════════════════════════════════╗\n`;
-    prontuario += `║                    PRONTUÁRIO MÉDICO - PRIMEIRA CONSULTA                      ║\n`;
+    prontuario += `║${tipoDiabetes.padStart(47 + Math.floor(tipoDiabetes.length/2)).padEnd(79)}║\n`;
+    prontuario += `║${tipoConsulta.padStart(47 + Math.floor(tipoConsulta.length/2)).padEnd(79)}║\n`;
     prontuario += `║                           Dr. Jorge Cecílio                                    ║\n`;
     prontuario += `╚═══════════════════════════════════════════════════════════════════════════════╝\n\n`;
     prontuario += `Data da Consulta: ${dataConsulta} às ${horaConsulta}\n\n`;
@@ -202,6 +220,12 @@ function gerarProntuario() {
     secaoId += addLine('Nome', getValue('nome'));
     secaoId += addLine('Data de Nascimento', formatDate(getValue('dataNascimento')));
     secaoId += addLine('Idade', getValue('idade'), ' anos');
+
+    // Campos específicos de consulta de seguimento
+    if (tipoConsulta === 'CONSULTA DE SEGUIMENTO') {
+        secaoId += addLine('Data da Última Consulta', formatDate(getValue('dataUltimaConsulta')));
+    }
+
     secaoId += addLine('Sexo', getValue('sexo'));
     secaoId += addLine('CPF', getValue('cpf'));
     secaoId += addLine('RG', getValue('rg'));
@@ -218,114 +242,222 @@ function gerarProntuario() {
         prontuario += secaoId + '\n';
     }
 
-    // 2. HISTÓRIA CLÍNICA
+    // 2. HISTÓRIA CLÍNICA / EVOLUÇÃO
     let secaoHist = '';
 
-    // 2.1 Queixa Principal e HDA
+    // 2.1 Queixa Principal e HDA / Intercorrências
     let subsec21 = '';
-    subsec21 += addBlock('Queixa Principal', getValue('queixaPrincipal'));
-    subsec21 += addBlock('História da Doença Atual', getValue('hda'));
+    subsec21 += addBlock('Queixas Atuais', getValue('queixaPrincipal'));
+
+    if (tipoConsulta === 'CONSULTA DE SEGUIMENTO') {
+        subsec21 += addBlock('Intercorrências desde a Última Consulta', getValue('hda'));
+    } else {
+        subsec21 += addBlock('História da Doença Atual', getValue('hda'));
+    }
 
     if (subsec21) {
-        secaoHist += `2.1 QUEIXA PRINCIPAL E HDA\n`;
+        if (tipoConsulta === 'CONSULTA DE SEGUIMENTO') {
+            secaoHist += `2.1 QUEIXAS E INTERCORRÊNCIAS\n`;
+        } else {
+            secaoHist += `2.1 QUEIXA PRINCIPAL E HDA\n`;
+        }
         secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
         secaoHist += subsec21;
     }
 
-    // 2.2 História da Diabetes
+    // 2.2 História da Diabetes / Adesão ao Tratamento
     let subsec22 = '';
-    subsec22 += addLine('Tipo de Diabetes', getValue('tipoDiabetes'));
-    subsec22 += addLine('Anos desde o Diagnóstico', getValue('anosDiagnostico'));
-    subsec22 += addLine('Idade ao Diagnóstico', getValue('idadeDiagnostico'));
-    subsec22 += addBlock('Circunstância do Diagnóstico', getValue('circunstanciaDiagnostico'));
-    subsec22 += addLine('Tratamentos', getCheckboxValues('tratamento'));
-    subsec22 += addBlock('Medicamentos Atuais', getValue('medicamentosAtuais'));
-    subsec22 += addLine('Controle Glicêmico Atual', getValue('controleGlicemico'));
-    subsec22 += addLine('Realiza Monitorização', getRadioValue('monitorizacao'));
-    if (getRadioValue('monitorizacao') === 'Sim') {
-        subsec22 += addLine('Frequência da Monitorização', getValue('frequenciaGlicemia'));
-    }
-    subsec22 += addLine('Episódios de Hipoglicemia', getRadioValue('hipoglicemia'));
-    if (getRadioValue('hipoglicemia') === 'Sim') {
-        subsec22 += addBlock('Detalhes das Hipoglicemias', getValue('frequenciaHipoglicemia'));
-    }
-    subsec22 += addLine('Internações Prévias por Diabetes', getRadioValue('internacoes'));
-    if (getRadioValue('internacoes') === 'Sim') {
-        subsec22 += addBlock('Motivo das Internações', getValue('motivoInternacoes'));
+
+    if (tipoConsulta === 'CONSULTA DE SEGUIMENTO') {
+        // Campos de consulta de seguimento
+        subsec22 += addBlock('Esquema de Insulina Atual', getValue('esquemaInsulina'));
+        subsec22 += addLine('Adesão ao Esquema de Insulina', getRadioValue('adesaoInsulina'));
+        subsec22 += addLine('Utiliza Outros Medicamentos', getRadioValue('outrosMedicamentosDM'));
+        subsec22 += addBlock('Outros Medicamentos', getValue('medicamentosAtuais'));
+        subsec22 += addLine('Usa Insulina (DM2)', getRadioValue('usaInsulina'));
+        subsec22 += addLine('Adesão aos Medicamentos', getRadioValue('adesaoMed'));
+        subsec22 += addBlock('Motivos de Não-Adesão', getValue('motivosNaoAdesao'));
+        subsec22 += addLine('Adesão à Dieta', getRadioValue('adesaoDieta'));
+        subsec22 += addLine('Pratica Atividade Física', getRadioValue('adesaoAtividade'));
+        subsec22 += addLine('Detalhes da Atividade Física', getValue('detalhesAtividade'));
+        subsec22 += addLine('Realiza Contagem de Carboidratos', getRadioValue('contagemCHO'));
+        subsec22 += addLine('Fator de Sensibilidade', getValue('fatorSensibilidade'));
+        subsec22 += addLine('I:CHO Café da Manhã', getValue('ichoCafe'));
+        subsec22 += addLine('I:CHO Almoço', getValue('ichoAlmoco'));
+        subsec22 += addLine('I:CHO Jantar', getValue('ichoJantar'));
+        subsec22 += addBlock('Observações sobre Fatores', getValue('observacoesFatores'));
+
+        if (subsec22) {
+            secaoHist += `2.2 ADESÃO AO TRATAMENTO\n`;
+            secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoHist += subsec22;
+        }
+    } else {
+        // Campos de consulta inicial
+        subsec22 += addLine('Tipo de Diabetes', getValue('tipoDiabetes'));
+        subsec22 += addLine('Anos desde o Diagnóstico', getValue('anosDiagnostico'));
+        subsec22 += addLine('Idade ao Diagnóstico', getValue('idadeDiagnostico'));
+        subsec22 += addBlock('Circunstância do Diagnóstico', getValue('circunstanciaDiagnostico'));
+        subsec22 += addLine('Tratamentos', getCheckboxValues('tratamento'));
+        subsec22 += addBlock('Esquema de Insulina', getValue('esquemaInsulina'));
+        subsec22 += addLine('Usa Insulina (DM2)', getRadioValue('usaInsulina'));
+        subsec22 += addBlock('Medicamentos Atuais', getValue('medicamentosAtuais'));
+        subsec22 += addLine('Controle Glicêmico Atual', getValue('controleGlicemico'));
+        subsec22 += addLine('Realiza Monitorização', getRadioValue('monitorizacao'));
+        if (getRadioValue('monitorizacao') === 'Sim') {
+            subsec22 += addLine('Frequência da Monitorização', getValue('frequenciaGlicemia'));
+        }
+        subsec22 += addLine('Episódios de Hipoglicemia', getRadioValue('hipoglicemia'));
+        if (getRadioValue('hipoglicemia') === 'Sim') {
+            subsec22 += addBlock('Detalhes das Hipoglicemias', getValue('frequenciaHipoglicemia'));
+        }
+        subsec22 += addLine('Internações Prévias por Diabetes', getRadioValue('internacoes'));
+        if (getRadioValue('internacoes') === 'Sim') {
+            subsec22 += addBlock('Motivo das Internações', getValue('motivoInternacoes'));
+        }
+
+        if (subsec22) {
+            secaoHist += `2.2 HISTÓRIA DA DIABETES\n`;
+            secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoHist += subsec22;
+        }
     }
 
-    if (subsec22) {
-        secaoHist += `2.2 HISTÓRIA DA DIABETES\n`;
-        secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoHist += subsec22;
-    }
-
-    // 2.3 Comorbidades
+    // 2.3 Controle Glicêmico (Seguimento) / Comorbidades (Inicial)
     let subsec23 = '';
-    subsec23 += addLine('Comorbidades', getCheckboxValues('comorbidade'));
-    subsec23 += addBlock('Outras Comorbidades', getValue('outrasComorbidades'));
-    subsec23 += addBlock('Cirurgias Prévias', getValue('cirurgiasPrevias'));
-    subsec23 += addBlock('Alergias Medicamentosas', getValue('alergias'));
-    subsec23 += addBlock('Outros Medicamentos em Uso', getValue('outrosMedicamentos'));
 
-    if (subsec23) {
-        secaoHist += `2.3 COMORBIDADES E ANTECEDENTES\n`;
-        secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoHist += subsec23;
+    if (tipoConsulta === 'CONSULTA DE SEGUIMENTO') {
+        // Campos de controle glicêmico para seguimento
+        subsec23 += addLine('Percepção do Controle Glicêmico', getValue('controleGlicemico'));
+        subsec23 += addLine('Realiza Monitorização', getRadioValue('monitorizacao'));
+        if (getRadioValue('monitorizacao') === 'Sim') {
+            subsec23 += addLine('Frequência da Monitorização', getValue('frequenciaGlicemia'));
+        }
+        subsec23 += addBlock('Valores Glicêmicos Recentes', getValue('valoresGlicemia'));
+        subsec23 += addLine('Episódios de Hipoglicemia', getRadioValue('hipoglicemia'));
+        if (getRadioValue('hipoglicemia') === 'Sim') {
+            subsec23 += addBlock('Detalhes das Hipoglicemias', getValue('frequenciaHipoglicemia'));
+        }
+        subsec23 += addLine('Episódios de Hiperglicemia Sintomática', getRadioValue('hiperglicemia'));
+
+        if (subsec23) {
+            secaoHist += `2.3 CONTROLE GLICÊMICO E MONITORIZAÇÃO\n`;
+            secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoHist += subsec23;
+        }
+    } else {
+        // Campos de comorbidades para consulta inicial
+        subsec23 += addLine('Comorbidades', getCheckboxValues('comorbidade'));
+        subsec23 += addLine('Hipertensão Arterial', getRadioValue('hipertensao'));
+        subsec23 += addLine('Dislipidemia', getRadioValue('dislipidemia'));
+        subsec23 += addLine('Obesidade', getRadioValue('obesidade'));
+        subsec23 += addLine('Tabagismo', getRadioValue('tabagismo'));
+        subsec23 += addBlock('Outras Comorbidades', getValue('outrasComorbidades'));
+        subsec23 += addBlock('Cirurgias Prévias', getValue('cirurgiasPrevias'));
+        subsec23 += addBlock('Alergias Medicamentosas', getValue('alergias'));
+        subsec23 += addBlock('Outros Medicamentos em Uso', getValue('outrosMedicamentos'));
+
+        if (subsec23) {
+            secaoHist += `2.3 COMORBIDADES E ANTECEDENTES\n`;
+            secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoHist += subsec23;
+        }
     }
 
-    // 2.4 Histórico Familiar
+    // 2.4 Comorbidades (Seguimento) / Histórico Familiar (Inicial)
     let subsec24 = '';
-    subsec24 += addLine('Diabetes em Familiares', getCheckboxValues('familiarDM'));
-    subsec24 += addLine('Outras Doenças Familiares', getCheckboxValues('familiarOutras'));
-    subsec24 += addBlock('Detalhes do Histórico Familiar', getValue('detalhesHistoricoFamiliar'));
 
-    if (subsec24) {
-        secaoHist += `2.4 HISTÓRICO FAMILIAR\n`;
-        secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoHist += subsec24;
+    if (tipoConsulta === 'CONSULTA DE SEGUIMENTO') {
+        // Campos de comorbidades para seguimento
+        subsec24 += addLine('Hipertensão Arterial', getRadioValue('hipertensao'));
+        subsec24 += addLine('Dislipidemia', getRadioValue('dislipidemia'));
+        subsec24 += addLine('Obesidade', getRadioValue('obesidade'));
+        subsec24 += addLine('Tabagismo', getRadioValue('tabagismo'));
+        subsec24 += addLine('Outras Comorbidades', getCheckboxValues('comorbidade'));
+        subsec24 += addBlock('Novas Comorbidades ou Mudanças', getValue('novasComorbidades'));
+        subsec24 += addBlock('Outros Medicamentos em Uso', getValue('outrosMedicamentos'));
+
+        if (subsec24) {
+            secaoHist += `2.4 COMORBIDADES E FATORES DE RISCO CARDIOVASCULAR\n`;
+            secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoHist += subsec24;
+        }
+    } else {
+        // Histórico familiar para consulta inicial
+        subsec24 += addLine('Diabetes em Familiares', getCheckboxValues('familiarDM'));
+        subsec24 += addLine('Doenças Autoimunes em Familiares', getCheckboxValues('familiarAutoimune'));
+        subsec24 += addLine('Outras Doenças Familiares', getCheckboxValues('familiarOutras'));
+        subsec24 += addBlock('Detalhes do Histórico Familiar', getValue('detalhesHistoricoFamiliar'));
+
+        if (subsec24) {
+            secaoHist += `2.4 HISTÓRICO FAMILIAR\n`;
+            secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoHist += subsec24;
+        }
     }
 
-    // 2.5 Hábitos de Vida
+    // 2.5 Sintomas de Complicações (Seguimento) / Hábitos de Vida (Inicial)
     let subsec25 = '';
-    subsec25 += addBlock('Padrão Alimentar', getValue('alimentacao'));
-    subsec25 += addLine('Acompanhamento Nutricional', getRadioValue('nutricionista'));
-    subsec25 += addLine('Atividade Física', getRadioValue('atividadeFisica'));
-    if (getValue('detalhesAtividade')) {
-        subsec25 += addLine('Detalhes da Atividade Física', getValue('detalhesAtividade'));
-    }
-    subsec25 += addLine('Tabagismo', getRadioValue('tabagismo'));
-    if (getValue('cargaTabagica')) {
-        subsec25 += addLine('Carga Tabágica', getValue('cargaTabagica'));
-    }
-    subsec25 += addLine('Etilismo', getRadioValue('etilismo'));
-    if (getValue('frequenciaAlcool')) {
-        subsec25 += addLine('Frequência e Quantidade de Álcool', getValue('frequenciaAlcool'));
-    }
-    subsec25 += addLine('Padrão de Sono', getValue('sono'));
-    subsec25 += addLine('Nível de Estresse/Ansiedade', getRadioValue('estresse'));
 
-    if (subsec25) {
-        secaoHist += `2.5 HÁBITOS DE VIDA\n`;
-        secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoHist += subsec25;
+    if (tipoConsulta === 'CONSULTA DE SEGUIMENTO') {
+        // Avaliação de sintomas para seguimento
+        subsec25 += addBlock('Sintomas Novos ou Piora de Sintomas Existentes', getValue('sintomasNovos'));
+        subsec25 += addLine('Sintomas Neurológicos nos Pés', getCheckboxValues('sintomasNeuro'));
+        subsec25 += addLine('Intensidade da Dor (EVA 0-10)', getValue('evaDor'));
+        subsec25 += addLine('Característica da Dor', getValue('caracteristicaDor'));
+        subsec25 += addLine('Problemas nos Pés', getCheckboxValues('sintomasPes'));
+        subsec25 += addLine('Última Avaliação Oftalmológica', getValue('ultimoOftalmo'));
+
+        if (subsec25) {
+            secaoHist += `2.5 AVALIAÇÃO DE SINTOMAS DE COMPLICAÇÕES\n`;
+            secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoHist += subsec25;
+        }
+    } else {
+        // Hábitos de vida para consulta inicial
+        subsec25 += addBlock('Padrão Alimentar', getValue('alimentacao'));
+        subsec25 += addLine('Acompanhamento Nutricional', getRadioValue('nutricionista'));
+        subsec25 += addLine('Atividade Física', getRadioValue('atividadeFisica'));
+        if (getValue('detalhesAtividade')) {
+            subsec25 += addLine('Detalhes da Atividade Física', getValue('detalhesAtividade'));
+        }
+        subsec25 += addLine('Tabagismo', getRadioValue('tabagismo'));
+        if (getValue('cargaTabagica')) {
+            subsec25 += addLine('Carga Tabágica', getValue('cargaTabagica'));
+        }
+        subsec25 += addLine('Etilismo', getRadioValue('etilismo'));
+        if (getValue('frequenciaAlcool')) {
+            subsec25 += addLine('Frequência e Quantidade de Álcool', getValue('frequenciaAlcool'));
+        }
+        subsec25 += addLine('Padrão de Sono', getValue('sono'));
+        subsec25 += addLine('Nível de Estresse/Ansiedade', getRadioValue('estresse'));
+
+        if (subsec25) {
+            secaoHist += `2.5 HÁBITOS DE VIDA\n`;
+            secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoHist += subsec25;
+        }
     }
 
-    // 2.6 Avaliação de Complicações
-    let subsec26 = '';
-    subsec26 += addLine('Sintomas Visuais', getCheckboxValues('sintomasVisuais'));
-    subsec26 += addLine('Última Consulta Oftalmológica', getValue('ultimoOftalmo'));
-    subsec26 += addLine('Sintomas Renais', getCheckboxValues('sintomasRenais'));
-    subsec26 += addLine('Sintomas Neurológicos', getCheckboxValues('sintomasNeuro'));
-    subsec26 += addLine('Sintomas Cardiovasculares', getCheckboxValues('sintomasCardio'));
-    subsec26 += addLine('Sintomas Gastrointestinais', getCheckboxValues('sintomasGastro'));
-    subsec26 += addLine('Sintomas Geniturinários', getCheckboxValues('sintomasGenito'));
-    subsec26 += addLine('Problemas nos Pés', getCheckboxValues('sintomasPes'));
+    // 2.6 Avaliação de Complicações (apenas para consulta inicial)
+    if (tipoConsulta !== 'CONSULTA DE SEGUIMENTO') {
+        let subsec26 = '';
+        subsec26 += addLine('Sintomas Visuais', getCheckboxValues('sintomasVisuais'));
+        subsec26 += addLine('Última Consulta Oftalmológica', getValue('ultimoOftalmo'));
+        subsec26 += addLine('Sintomas Renais', getCheckboxValues('sintomasRenais'));
+        subsec26 += addLine('Sintomas Neurológicos', getCheckboxValues('sintomasNeuro'));
+        subsec26 += addLine('Intensidade da Dor (EVA 0-10)', getValue('evaDor'));
+        subsec26 += addLine('Característica da Dor', getValue('caracteristicaDor'));
+        subsec26 += addLine('Sintomas Cardiovasculares', getCheckboxValues('sintomasCardio'));
+        subsec26 += addLine('Sintomas Gastrointestinais', getCheckboxValues('sintomasGastro'));
+        subsec26 += addLine('Sintomas Geniturinários', getCheckboxValues('sintomasGenito'));
+        subsec26 += addLine('Problemas nos Pés', getCheckboxValues('sintomasPes'));
 
-    if (subsec26) {
-        secaoHist += `2.6 AVALIAÇÃO DE COMPLICAÇÕES CRÔNICAS\n`;
-        secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoHist += subsec26;
+        if (subsec26) {
+            secaoHist += `2.6 AVALIAÇÃO DE COMPLICAÇÕES CRÔNICAS\n`;
+            secaoHist += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoHist += subsec26;
+        }
     }
 
     if (secaoHist) {
@@ -364,6 +496,7 @@ function gerarProntuario() {
     subsec32 += addLine('Estado Geral', getValue('estadoGeral'));
     subsec32 += addLine('Características', getCheckboxValues('caracteristicasGerais'));
     subsec32 += addBlock('Exame da Pele', getValue('pele'));
+    subsec32 += addBlock('Exame da Tireoide', getValue('exameTireoide'));
 
     if (subsec32) {
         secaoExame += `3.2 EXAME GERAL\n`;
@@ -505,86 +638,113 @@ function gerarProntuario() {
         prontuario += secaoLab;
     }
 
-    // 5. AVALIAÇÃO E DIAGNÓSTICO
+    // 5. AVALIAÇÃO E DIAGNÓSTICO / CONDUTA (Seguimento)
     let secaoAval = '';
-    secaoAval += addBlock('DIAGNÓSTICO PRINCIPAL', getValue('diagnosticoPrincipal'));
-    secaoAval += addBlock('DIAGNÓSTICOS SECUNDÁRIOS', getValue('diagnosticosSecundarios'));
-    secaoAval += addLine('CLASSIFICAÇÃO DO CONTROLE GLICÊMICO', getValue('classificacaoControle'));
-    secaoAval += addLine('COMPLICAÇÕES PRESENTES', getCheckboxValues('complicacoes'));
-    secaoAval += addBlock('ESTADIAMENTO DAS COMPLICAÇÕES', getValue('estadiamentoComplicacoes'));
 
-    if (secaoAval) {
-        prontuario += `═══════════════════════════════════════════════════════════════════════════════\n`;
-        prontuario += `5. AVALIAÇÃO E DIAGNÓSTICO\n`;
-        prontuario += `═══════════════════════════════════════════════════════════════════════════════\n\n`;
-        prontuario += secaoAval;
-    }
+    if (tipoConsulta === 'CONSULTA DE SEGUIMENTO') {
+        // Campos específicos de consulta de seguimento
+        secaoAval += addLine('CLASSIFICAÇÃO DO CONTROLE GLICÊMICO', getValue('classificacaoControle'));
+        secaoAval += addBlock('AVALIAÇÃO DO CONTROLE ATUAL', getValue('avaliacaoControle'));
+        secaoAval += addBlock('EVOLUÇÃO DAS COMPLICAÇÕES', getValue('evolucaoComplicacoes'));
+        secaoAval += addBlock('AJUSTES MEDICAMENTOSOS', getValue('ajustesMedicamentosos'));
+        secaoAval += addBlock('ORIENTAÇÕES E REFORÇOS', getValue('orientacoes'));
+        secaoAval += addBlock('EXAMES SOLICITADOS', getValue('examesSolicitados'));
+        secaoAval += addBlock('ENCAMINHAMENTOS', getValue('encaminhamentos'));
+        secaoAval += addBlock('METAS PARA A PRÓXIMA CONSULTA', getValue('metasProximaConsulta'));
+        secaoAval += addLine('RETORNO', getValue('retorno'));
+        secaoAval += addBlock('OBSERVAÇÕES ADICIONAIS', getValue('observacoes'));
 
-    // 6. PLANO TERAPÊUTICO
-    let secaoPlano = '';
-    if (getValue('metasGlicemicas')) {
-        secaoPlano += `6.1 METAS GLICÊMICAS INDIVIDUALIZADAS\n`;
-        secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoPlano += getValue('metasGlicemicas') + '\n\n';
-    }
-    if (getValue('planoMedicamentoso')) {
-        secaoPlano += `6.2 PLANO MEDICAMENTOSO\n`;
-        secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoPlano += getValue('planoMedicamentoso') + '\n\n';
-    }
-    if (getValue('orientacoesDieta')) {
-        secaoPlano += `6.3 ORIENTAÇÕES DIETÉTICAS\n`;
-        secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoPlano += getValue('orientacoesDieta') + '\n\n';
-    }
-    if (getValue('orientacoesAtividade')) {
-        secaoPlano += `6.4 ORIENTAÇÕES SOBRE ATIVIDADE FÍSICA\n`;
-        secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoPlano += getValue('orientacoesAtividade') + '\n\n';
-    }
-    if (getValue('automonitoramento')) {
-        secaoPlano += `6.5 PLANO DE AUTOMONITORAMENTO\n`;
-        secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoPlano += getValue('automonitoramento') + '\n\n';
-    }
-    if (getValue('educacaoDiabetes')) {
-        secaoPlano += `6.6 EDUCAÇÃO EM DIABETES\n`;
-        secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoPlano += getValue('educacaoDiabetes') + '\n\n';
-    }
-    if (getValue('examesSolicitados')) {
-        secaoPlano += `6.7 EXAMES SOLICITADOS\n`;
-        secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoPlano += getValue('examesSolicitados') + '\n\n';
-    }
-    if (getValue('encaminhamentos')) {
-        secaoPlano += `6.8 ENCAMINHAMENTOS\n`;
-        secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoPlano += getValue('encaminhamentos') + '\n\n';
-    }
-    if (getValue('vacinacao')) {
-        secaoPlano += `6.9 VACINAÇÃO\n`;
-        secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
-        secaoPlano += getValue('vacinacao') + '\n\n';
+        if (secaoAval) {
+            prontuario += `═══════════════════════════════════════════════════════════════════════════════\n`;
+            prontuario += `5. AVALIAÇÃO E CONDUTA\n`;
+            prontuario += `═══════════════════════════════════════════════════════════════════════════════\n\n`;
+            prontuario += secaoAval;
+        }
+    } else {
+        // Campos de consulta inicial
+        secaoAval += addBlock('DIAGNÓSTICO PRINCIPAL', getValue('diagnosticoPrincipal'));
+        secaoAval += addBlock('DIAGNÓSTICOS SECUNDÁRIOS', getValue('diagnosticosSecundarios'));
+        secaoAval += addLine('CLASSIFICAÇÃO DO CONTROLE GLICÊMICO', getValue('classificacaoControle'));
+        secaoAval += addLine('COMPLICAÇÕES PRESENTES', getCheckboxValues('complicacoes'));
+        secaoAval += addBlock('ESTADIAMENTO DAS COMPLICAÇÕES', getValue('estadiamentoComplicacoes'));
+
+        if (secaoAval) {
+            prontuario += `═══════════════════════════════════════════════════════════════════════════════\n`;
+            prontuario += `5. AVALIAÇÃO E DIAGNÓSTICO\n`;
+            prontuario += `═══════════════════════════════════════════════════════════════════════════════\n\n`;
+            prontuario += secaoAval;
+        }
     }
 
-    if (secaoPlano) {
-        prontuario += `═══════════════════════════════════════════════════════════════════════════════\n`;
-        prontuario += `6. PLANO TERAPÊUTICO\n`;
-        prontuario += `═══════════════════════════════════════════════════════════════════════════════\n\n`;
-        prontuario += secaoPlano;
+    // 6. PLANO TERAPÊUTICO (apenas para consultas iniciais)
+    if (tipoConsulta !== 'CONSULTA DE SEGUIMENTO') {
+        let secaoPlano = '';
+        if (getValue('metasGlicemicas')) {
+            secaoPlano += `6.1 METAS GLICÊMICAS INDIVIDUALIZADAS\n`;
+            secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoPlano += getValue('metasGlicemicas') + '\n\n';
+        }
+        if (getValue('planoMedicamentoso')) {
+            secaoPlano += `6.2 PLANO MEDICAMENTOSO\n`;
+            secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoPlano += getValue('planoMedicamentoso') + '\n\n';
+        }
+        if (getValue('orientacoesDieta')) {
+            secaoPlano += `6.3 ORIENTAÇÕES DIETÉTICAS\n`;
+            secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoPlano += getValue('orientacoesDieta') + '\n\n';
+        }
+        if (getValue('orientacoesAtividade')) {
+            secaoPlano += `6.4 ORIENTAÇÕES SOBRE ATIVIDADE FÍSICA\n`;
+            secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoPlano += getValue('orientacoesAtividade') + '\n\n';
+        }
+        if (getValue('automonitoramento')) {
+            secaoPlano += `6.5 PLANO DE AUTOMONITORAMENTO\n`;
+            secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoPlano += getValue('automonitoramento') + '\n\n';
+        }
+        if (getValue('educacaoDiabetes')) {
+            secaoPlano += `6.6 EDUCAÇÃO EM DIABETES\n`;
+            secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoPlano += getValue('educacaoDiabetes') + '\n\n';
+        }
+        if (getValue('examesSolicitados')) {
+            secaoPlano += `6.7 EXAMES SOLICITADOS\n`;
+            secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoPlano += getValue('examesSolicitados') + '\n\n';
+        }
+        if (getValue('encaminhamentos')) {
+            secaoPlano += `6.8 ENCAMINHAMENTOS\n`;
+            secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoPlano += getValue('encaminhamentos') + '\n\n';
+        }
+        if (getValue('vacinacao')) {
+            secaoPlano += `6.9 VACINAÇÃO\n`;
+            secaoPlano += `─────────────────────────────────────────────────────────────────────────────\n\n`;
+            secaoPlano += getValue('vacinacao') + '\n\n';
+        }
+
+        if (secaoPlano) {
+            prontuario += `═══════════════════════════════════════════════════════════════════════════════\n`;
+            prontuario += `6. PLANO TERAPÊUTICO\n`;
+            prontuario += `═══════════════════════════════════════════════════════════════════════════════\n\n`;
+            prontuario += secaoPlano;
+        }
     }
 
-    // RETORNO E OBSERVAÇÕES
-    let secaoFinal = '';
-    secaoFinal += addLine('RETORNO', getValue('retorno'));
-    secaoFinal += addBlock('\nOBSERVAÇÕES ADICIONAIS', getValue('observacoes'));
+    // RETORNO E OBSERVAÇÕES (apenas para consultas iniciais)
+    if (tipoConsulta !== 'CONSULTA DE SEGUIMENTO') {
+        let secaoFinal = '';
+        secaoFinal += addLine('RETORNO', getValue('retorno'));
+        secaoFinal += addBlock('\nOBSERVAÇÕES ADICIONAIS', getValue('observacoes'));
 
-    if (secaoFinal) {
-        prontuario += `═══════════════════════════════════════════════════════════════════════════════\n`;
-        prontuario += `RETORNO E OBSERVAÇÕES\n`;
-        prontuario += `═══════════════════════════════════════════════════════════════════════════════\n\n`;
-        prontuario += secaoFinal;
+        if (secaoFinal) {
+            prontuario += `═══════════════════════════════════════════════════════════════════════════════\n`;
+            prontuario += `RETORNO E OBSERVAÇÕES\n`;
+            prontuario += `═══════════════════════════════════════════════════════════════════════════════\n\n`;
+            prontuario += secaoFinal;
+        }
     }
 
     // Rodapé
